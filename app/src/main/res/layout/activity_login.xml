@@ -7,8 +7,15 @@
     tools:context=".Login">
 
     <ImageView
+        android:id="@+id/applogo"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:src="@drawable/logo" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>
