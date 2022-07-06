@@ -85,4 +85,16 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         }
         return ctList
     }
+
+    fun updateContact(ct: Contact) : Int {
+        val db = this.writableDatabase
+
+        val cv = ContentValues()
+        cv.put(COL_NAME, ct.name)
+        cv.put(COL_PHONE, ct.phone)
+
+        val success = db.update(TABLE_NAME, cv, "id=" + ct.id, null)
+        db.close()
+        return success
+    }
 }
