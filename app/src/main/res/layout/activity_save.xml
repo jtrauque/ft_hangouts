@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login">
+    tools:context=".Save">
 
     <ImageView
         android:id="@+id/applogo"
@@ -15,7 +15,7 @@
         android:layout_marginTop="70dp"/>
 
     <EditText
-        android:id="@+id/etvName"
+        android:id="@+id/edName"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/applogo"
@@ -26,10 +26,10 @@
         android:paddingLeft="10dp" />
 
     <EditText
-        android:id="@+id/etvPhone"
+        android:id="@+id/edPhone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/etvName"
+        android:layout_below="@id/edName"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
@@ -38,10 +38,10 @@
         android:paddingLeft="10dp"/>
 
     <Button
-        android:id="@+id/btn_save"
+        android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/etvPhone"
+        android:layout_below="@id/edPhone"
         android:text="Save"
         android:textSize="20dp"
         android:background="@drawable/btn_shape"

@@ -1,40 +1,88 @@
 package com.example.ft_hangouts
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
+import java.lang.Exception
 
 val DATABASE_NAME = "MyDB"
-val TABLE_NAME = "Users"
-val COL_NAME = "name"
-val COL_PHONE = "phone"
-val COL_ID = "id"
+//val TABLE_NAME = "Users"
+//val COL_NAME = "name"
+//val COL_PHONE = "phone"
+//val COL_ID = "id"
 
 class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
+
+  //  private const val DATABASE_NAME = "MyDB"
+    companion object {
+      private const val TABLE_NAME = "Users"
+      private const val COL_NAME = "name"
+      private const val COL_PHONE = "phone"
+      private const val COL_ID = "id"
+  }
+
     override fun onCreate(db: SQLiteDatabase?) {
         val createTable = "CREATE TABLE" + TABLE_NAME + " (" +
                 COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_NAME + " VARCHAR(256)" +
-                COL_PHONE + " INTEGER)";
+                COL_PHONE + " VARCHAR(256))";
 
         db?.execSQL(createTable)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
-        TODO("Not yet implemented")
+       db!!.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        onCreate(db)
     }
 
-    fun insertData(user: User) {
+    fun insertContact(contact: Contact) : Long {
         val db = this.writableDatabase
         var cv = ContentValues()
-        cv.put(COL_NAME, user.name)
-        cv.put(COL_PHONE, user.phone)
+        cv.put(COL_NAME, contact.name)
+        cv.put(COL_PHONE, contact.phone)
         var result = db.insert(TABLE_NAME, null, cv)
         if (result == -1.toLong())
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
         else
             Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+        db.close()
+        return result
+    }
+
+    @SuppressLint("Range")
+    fun getAllContact() : ArrayList<Contact> {
+        val ctList: ArrayList<Contact> = ArrayList()
+        val selectQuery = "SELECT * FROM $TABLE_NAME"
+        val db = this.readableDatabase
+
+        val cursor: Cursor?
+
+        try{
+            cursor = db.rawQuery(selectQuery, null)
+        }catch (e: Exception) {
+            e.printStackTrace()
+            db.execSQL(selectQuery)
+            return ArrayList()
+        }
+
+        var id : Int
+        var name: String
+        var phone: String
+
+        if (cursor.moveToFirst()){
+            do {
+                id = cursor.getInt(cursor.getColumnIndex("id"))
+                name = cursor.getString(cursor.getColumnIndex("name"))
+                phone = cursor.getString(cursor.getColumnIndex("phone"))
+
+                val ct = Contact(id = id, name = name, phone = phone)
+                ctList.add(ct)
+            } while (cursor.moveToNext())
+        }
+        return ctList
     }
 }
