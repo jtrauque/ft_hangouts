@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
 import java.lang.Exception
 
-val DATABASE_NAME = "MyDB"
+const val DATABASE_NAME = "MyDB"
 //val TABLE_NAME = "Users"
 //val COL_NAME = "name"
 //val COL_PHONE = "phone"
@@ -26,9 +26,9 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
   }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val createTable = "CREATE TABLE" + TABLE_NAME + " (" +
+        val createTable = "CREATE TABLE " + TABLE_NAME + " (" +
                 COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COL_NAME + " VARCHAR(256)" +
+                COL_NAME + " VARCHAR(256), " +
                 COL_PHONE + " VARCHAR(256))";
 
         db?.execSQL(createTable)
@@ -45,7 +45,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         cv.put(COL_NAME, contact.name)
         cv.put(COL_PHONE, contact.phone)
         var result = db.insert(TABLE_NAME, null, cv)
-        if (result == -1.toLong())
+        if (result == (-1).toLong())
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
         else
             Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
@@ -63,7 +63,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
 
         try{
             cursor = db.rawQuery(selectQuery, null)
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
             db.execSQL(selectQuery)
             return ArrayList()

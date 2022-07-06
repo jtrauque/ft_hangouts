@@ -7,7 +7,7 @@
     tools:context=".Save">
 
     <ImageView
-        android:id="@+id/applogo"
+        android:id="@+id/appLogo"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/logo"
@@ -18,7 +18,7 @@
         android:id="@+id/edName"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/applogo"
+        android:layout_below="@id/appLogo"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edt_background"

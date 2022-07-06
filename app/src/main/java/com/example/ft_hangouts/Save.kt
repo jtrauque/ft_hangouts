@@ -11,7 +11,6 @@ import androidx.core.text.isDigitsOnly
 class Save : AppCompatActivity() {
     private lateinit var edName: EditText
     private lateinit var edPhone: EditText
-   // private lateinit var btnAdd: Button
     private lateinit var btnSave: Button
     private lateinit var sqliteHelper: DataBaseHandler
 
@@ -20,6 +19,7 @@ class Save : AppCompatActivity() {
         setContentView(R.layout.activity_save)
 
         initView()
+        sqliteHelper = DataBaseHandler(this)
         btnSave.setOnClickListener(){
             addContact()
         }
@@ -29,7 +29,6 @@ class Save : AppCompatActivity() {
         edName = findViewById(R.id.edName)
         edPhone = findViewById(R.id.edPhone)
         btnSave = findViewById(R.id.btnSave)
-        //btnView = findViewById(R.id.btnView)
     }
 
     private fun addContact() {
