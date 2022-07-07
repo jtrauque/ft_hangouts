@@ -5,17 +5,16 @@ import android.database.sqlite.SQLiteOpenHelper
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.view.ViewGroup
+import android.widget.*
 import androidx.core.text.isDigitsOnly
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var edName: EditText
-    private lateinit var edPhone: EditText
-    private lateinit var btnAdd:Button
+   // private lateinit var edName: EditText
+   // private lateinit var edPhone: EditText
+    private lateinit var btnAdd:ImageButton
     private lateinit var btnView:Button
 
     private lateinit var sqliteHelper: DataBaseHandler
@@ -38,8 +37,8 @@ class MainActivity : AppCompatActivity() {
         btnView.setOnClickListener{ getContacts()}
         adapter?.setOnClickItem {
             Toast.makeText(this, it.name, Toast.LENGTH_SHORT).show()
-            edName.setText(it.name)
-            edPhone.setText(it.phone)
+        //    edName.setText(it.name)
+        //    edPhone.setText(it.phone)
             ct = it
         }
     }
@@ -58,9 +57,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        edName = findViewById(R.id.edName)
-        edPhone = findViewById(R.id.edPhone)
-        btnAdd = findViewById(R.id.btnAdd)
+        //edName = findViewById(R.id.edName)
+        //edPhone = findViewById(R.id.edPhone)
+        btnAdd = ImageButton(this)
+        btnAdd.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT)
+        btnAdd.setImageResource(com.google.android.material.R.drawable.material_ic_clear_black_24dp)
         btnView = findViewById(R.id.btnView)
         recyclerView = findViewById((R.id.recycleView))
     }
