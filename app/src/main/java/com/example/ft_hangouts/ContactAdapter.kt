@@ -1,11 +1,13 @@
 package com.example.ft_hangouts
 
+import android.content.DialogInterface
 import android.view.LayoutInflater
-import android.view.ScrollCaptureCallback
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RemoteViews
+import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
 
 class ContactAdapter: RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
@@ -38,8 +40,18 @@ class ContactAdapter: RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
         private var id = view.findViewById<TextView>(R.id.tvId)
         private var name = view.findViewById<TextView>(R.id.tvName)
         private var phone = view.findViewById<TextView>(R.id.tvPhone)
-        private var btnDelete = view.findViewById<TextView>(R.id.btnDelete)
-        private var btnModify = view.findViewById<TextView>(R.id.btnModify)
+        private var btnDelete = view.findViewById<TextView>(R.id.btnDelete) as Button
+        private var btnModify = view.findViewById<TextView>(R.id.btnModify) as Button
+
+       // private lateinit var sqliteHelper: DataBaseHandler
+
+    //   fun initializer(item: MenuItem, onClickListener: DialogInterface.OnClickListener) {
+
+     //  }
+       //   view.setOnClickListener {
+
+//          }
+       // }
 
         fun binView(ct : Contact) {
             id.text = ct.id.toString()

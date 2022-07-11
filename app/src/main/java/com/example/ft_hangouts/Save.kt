@@ -3,6 +3,7 @@ package com.example.ft_hangouts
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -35,6 +36,7 @@ class Save : AppCompatActivity() {
         val name = edName.text.toString()
         val phone = edPhone.text.toString()
 
+        Log.e("in add contact function", "2")
         if (name.isEmpty() || phone.isEmpty()) {
             Toast.makeText(this, "Please enter both required fields", Toast.LENGTH_SHORT).show()
         } else if (!phone.isDigitsOnly()) {

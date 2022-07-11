@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Save">
+    tools:context=".Save"
+    android:background="@drawable/pack1">
 
     <ImageView
         android:id="@+id/appLogo"
@@ -33,7 +34,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
-        android:hint="Telephone number"
+        android:hint="Phone number"
         android:background="@drawable/edt_background"
         android:paddingLeft="10dp"/>
 

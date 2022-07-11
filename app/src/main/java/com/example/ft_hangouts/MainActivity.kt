@@ -1,21 +1,19 @@
 package com.example.ft_hangouts
 
 import android.content.Intent
-import android.database.sqlite.SQLiteOpenHelper
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.text.isDigitsOnly
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
    // private lateinit var edName: EditText
    // private lateinit var edPhone: EditText
-    private lateinit var btnAdd:ImageButton
-    private lateinit var btnView:Button
+    lateinit var btnAdd:ImageButton
+   // private lateinit var btnView:EditText
 
     private lateinit var sqliteHelper: DataBaseHandler
     private lateinit var recyclerView: RecyclerView
@@ -29,15 +27,18 @@ class MainActivity : AppCompatActivity() {
         initView()
         initRecycleView()
         sqliteHelper = DataBaseHandler(this) //
-
         btnAdd.setOnClickListener(){
+            Log.e("add contact", "1")
             val intent = Intent(this, Save::class.java)
+            Log.e("add contact", "1")
             startActivity(intent)
         }
-        btnView.setOnClickListener{ getContacts()}
+        //btnView.setOnClickListener{ getContacts()}
+        getContacts()
         adapter?.setOnClickItem {
             Toast.makeText(this, it.name, Toast.LENGTH_SHORT).show()
-        //    edName.setText(it.name)
+           // sqliteHelper.updateContact(it)
+            //Save.edName.setText(it.name)
         //    edPhone.setText(it.phone)
             ct = it
         }
@@ -59,12 +60,13 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         //edName = findViewById(R.id.edName)
         //edPhone = findViewById(R.id.edPhone)
-        btnAdd = ImageButton(this)
-        btnAdd.layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT)
-        btnAdd.setImageResource(com.google.android.material.R.drawable.material_ic_clear_black_24dp)
-        btnView = findViewById(R.id.btnView)
+       // btnAdd = ImageButton(this)
+        btnAdd = findViewById<ImageButton>(R.id.btnAdd)
+     //   btnAdd.layoutParams = LinearLayout.LayoutParams(
+       //     ViewGroup.LayoutParams.WRAP_CONTENT,
+     //       ViewGroup.LayoutParams.WRAP_CONTENT)
+      //  btnAdd.setImageResource(R.drawable.add)
+        //btnView = findViewById(R.id.btnView)
         recyclerView = findViewById((R.id.recycleView))
     }
 }
