@@ -21,7 +21,7 @@
         android:id="@+id/appLogo"
         android:layout_width="wrap_content"
         android:layout_height="150dp"
-        android:layout_centerHorizontal="true"
+        android:contentDescription="logo42"
         android:src="@drawable/logo" />
     <LinearLayout
         android:layout_width="wrap_content"
@@ -31,8 +31,7 @@
             android:id="@+id/btnView"
             android:layout_width="300dp"
             android:layout_height="35dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="13dp"
             android:elevation="10dp"
             android:background="@drawable/btn_shape"
@@ -40,19 +39,19 @@
             android:text="All Contacts"
             android:textStyle="bold"
             android:textColor="@color/blue"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <ImageButton
             android:id="@+id/btnAdd"
             android:layout_width="53dp"
             android:layout_height="50dp"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:background="@null"
-            android:layout_alignParentRight="true"
             android:autofillHints="add"
+            android:contentDescription="add"
             android:src="@drawable/add"
-            android:tint="@color/blue"/>
+            app:tint="@color/blue"/>
 
     </LinearLayout>
     <LinearLayout
@@ -63,10 +62,29 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleView"
             android:layout_width="347dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
+            android:layout_height="388dp"
+            android:layout_marginStart="20dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/card_items_contacts" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="@color/gray"
+        android:elevation="10dp">
+        <ImageButton
+            android:id="@+id/btnSms"
+            android:layout_width="53dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="310dp"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:autofillHints="sms"
+            android:contentDescription="sms"
+            android:src="@drawable/sms"
+            app:tint="@color/blue" />
     </LinearLayout>
 
 </LinearLayout>

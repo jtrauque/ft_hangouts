@@ -98,4 +98,5 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         db.close()
         return success
     }
+
 }

@@ -10,12 +10,25 @@ import android.widget.TextView
 import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
 
-class ContactAdapter: RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
+class ContactAdapter (private val data: List<Contact>, val onClickDelete: (Int) -> Unit) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>(){
+    inner class ContactViewHolder(private var view: View) : RecyclerView.ViewHolder(view) {
+        private var name = view.findViewById<TextView>(R.id.tvName)
+        private var phone = view.findViewById<TextView>(R.id.tvPhone)
+
+        fun binView(ct : Contact, position : Int) {
+            val btnDelete = view.findViewById<Button>(R.id.btnDelete)
+            name.text = ct.name
+            phone.text = ct.phone
+
+            btnDelete.setOnClickListener { deleteItem(position)}
+        }
+    }
+
     private var onClickItem: ((Contact) -> Unit)? = null
     private var ctList: ArrayList<Contact> = ArrayList()
 
-    fun addItems(items: ArrayList<Contact>) {
-        this.ctList = items
+    fun addItems(ctList: List<Contact>, param: (Any) -> Unit) {
+        this.ctList = ctList as ArrayList<Contact>
         notifyDataSetChanged()
     }
 
@@ -28,36 +41,22 @@ class ContactAdapter: RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val ct = ctList[position]
-        holder.binView(ct)
+        holder.binView(ct, position)
         holder.itemView.setOnClickListener{ onClickItem?.invoke(ct) }
+
     }
 
     override fun getItemCount(): Int {
         return ctList.size
     }
 
-    class ContactViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
-        private var id = view.findViewById<TextView>(R.id.tvId)
-        private var name = view.findViewById<TextView>(R.id.tvName)
-        private var phone = view.findViewById<TextView>(R.id.tvPhone)
-        private var btnDelete = view.findViewById<TextView>(R.id.btnDelete) as Button
-        private var btnModify = view.findViewById<TextView>(R.id.btnModify) as Button
+    fun setItems(ctList: List<Contact> ) {
+        this.ctList = ctList as ArrayList<Contact>
+        notifyDataSetChanged()
+    }
 
-       // private lateinit var sqliteHelper: DataBaseHandler
-
-    //   fun initializer(item: MenuItem, onClickListener: DialogInterface.OnClickListener) {
-
-     //  }
-       //   view.setOnClickListener {
-
-//          }
-       // }
-
-        fun binView(ct : Contact) {
-            id.text = ct.id.toString()
-            name.text = ct.name
-            phone.text = ct.phone
-
-        }
+    fun deleteItem(position: Int) {
+        this.ctList.removeAt(position)
+        notifyDataSetChanged()
     }
 }
