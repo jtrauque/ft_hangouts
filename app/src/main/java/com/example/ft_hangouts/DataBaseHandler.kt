@@ -87,7 +87,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
     }
 
     //fun updateContact(ct: ContactAdapter.ContactViewHolder) : Int {
-    fun updateContact(ct: Contact) : Int {
+    fun updateContact(ct: Unit?) : Int {
         val db = this.writableDatabase
 
         val cv = ContentValues()

@@ -9,11 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
-   // private lateinit var edName: EditText
-   // private lateinit var edPhone: EditText
     lateinit var btnAdd:ImageButton
-    lateinit var btnModify:Button
-  //  lateinit var btnDelete:Button
 
     private lateinit var sqliteHelper: DataBaseHandler
     private lateinit var recyclerView: RecyclerView
@@ -33,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, Save::class.java)
             startActivity(intent)
         }
-       // btnDelete.setOnClickListener{ }
+
       //  btnModify.setOnClickListener {
           //  ct = getContacts()
             //    sqliteHelper.updateContact(ct)
@@ -53,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         val ctList = sqliteHelper.getAllContact()
         Log.e("pppp", "${ctList.size}")
         adapter?.addItems(ctList){position -> deleteItem(position as Int)}
+        adapter?.addItems(ctList){position -> modifyItem(position as Int)}
     }
 
     private fun deleteItem(position: Int) {
@@ -62,27 +59,24 @@ class MainActivity : AppCompatActivity() {
             adapter?.setItems(ctList)
         }
     }
-  //  private fun getContactRef() {
+    private fun modifyItem(position: Int) {
+        if (::sqliteHelper.isInitialized) {
+            val ctList = sqliteHelper.getAllContact()
+            sqliteHelper.updateContact(ctList[position])
+        }
+    }
 
-  //  }
 
     private fun initRecycleView() {
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = ContactAdapter(sqliteHelper.getAllContact()) {position -> deleteItem(position as Int)}
+        adapter = ContactAdapter(this, sqliteHelper.getAllContact(), {
+                position -> deleteItem(position as Int)}, {
+                position -> modifyItem(position as Int)} )
         recyclerView.adapter = adapter
     }
 
     private fun initView() {
-        //edName = findViewById(R.id.edName)
-        //edPhone = findViewById(R.id.edPhone)
-     //   btnModify = findViewById<Button>(R.id.btnModify)
-      //  btnDelete = findViewById<Button>(R.id.btnDelete)
         btnAdd = findViewById<ImageButton>(R.id.btnAdd)
-     //   btnAdd.layoutParams = LinearLayout.LayoutParams(
-       //     ViewGroup.LayoutParams.WRAP_CONTENT,
-     //       ViewGroup.LayoutParams.WRAP_CONTENT)
-      //  btnAdd.setImageResource(R.drawable.add)
-        //btnView = findViewById(R.id.btnView)
         recyclerView = findViewById((R.id.recycleView))
     }
 }

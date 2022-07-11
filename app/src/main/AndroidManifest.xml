@@ -24,6 +24,9 @@
         <activity
             android:name=".Save"
             android:exported="false"> </activity>
+        <activity
+            android:name=".Modify"
+            android:exported="false"> </activity>
     </application>
 
 </manifest>
