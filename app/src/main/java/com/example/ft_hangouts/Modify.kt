@@ -1,23 +1,32 @@
 package com.example.ft_hangouts
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.text.isDigitsOnly
 
 class Modify : AppCompatActivity() {
 
     private lateinit var btnSave: Button
     private lateinit var sqliteHelper: DataBaseHandler
-    var usedName = intent.getStringExtra("name")
-    var usedPhone = intent.getStringExtra("phone")
+    private lateinit var usedName : String
+    private lateinit var usedPhone : String
+    private lateinit var newName : EditText
+    private lateinit var newPhone : EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_save)
+        setContentView(R.layout.activity_modify)
 
         initView()
+        val intent: Intent = intent
+        usedName = intent.getStringExtra("name").toString()
+        usedPhone = intent.getStringExtra("phone").toString()
         sqliteHelper = DataBaseHandler(this)
         btnSave.setOnClickListener(){
             addContact()
@@ -25,40 +34,33 @@ class Modify : AppCompatActivity() {
     }
 
     private fun initView() {
-       // usedName = getIntent.putExtras("phone")
-       // usedPhone = intent.extras?.getString("phone")
-
-
-        btnSave = findViewById(R.id.btnSave)
-       // usedName = findViewById(R.id.usedName)
-       // usedPhone = findViewById(R.id.usedPhone)
-       // btnSave = findViewById(R.id.btnSave)
+        newName = findViewById(R.id.usedName)
+        newPhone = findViewById(R.id.usedPhone)
+        btnSave = findViewById(R.id.btnSaveMod)
     }
 
     private fun addContact() {
-        val name = usedName
-        val phone = usedPhone
+        val name = newName.text.toString()
+        val phone = newPhone.text.toString()
 
         Log.e("in add contact function", "2")
-        /*
-        if (name.isEmpty() || phone?.isEmpty()) {
-            Toast.makeText(this, "Please enter both required fields", Toast.LENGTH_SHORT).show()
+
+        if (name.isEmpty() || phone.isEmpty()) {
+            Toast.makeText(this, "No changes", Toast.LENGTH_SHORT).show()
         } else if (!phone.isDigitsOnly()) {
             Toast.makeText(this, "Please enter numbers only for the phone", Toast.LENGTH_SHORT)
                 .show()
-        } else {*/
-            val ct = name?.let {
-                if (phone != null) {
-                    Contact(name = name, phone = phone)
-                }
-            }
+        } else {
+            val ct = Contact(name = name, phone = phone)
+
             val status = sqliteHelper.updateContact(ct)
-            if (status < -1) {
+            if (status != null && status < -1) {
                 Toast.makeText(this, "Contact created...", Toast.LENGTH_SHORT).show()
-              //  clearEditText()
+                //  clearEditText()
             } else {
                 Toast.makeText(this, "Record not saved...", Toast.LENGTH_SHORT).show()
             }
+        }
     }
 
 

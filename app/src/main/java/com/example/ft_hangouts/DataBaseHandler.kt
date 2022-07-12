@@ -6,6 +6,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import android.widget.Toast
 import java.lang.Exception
 
@@ -35,8 +36,15 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
-       db!!.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        db!!.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
+    }
+
+    fun deleteContact(contact: Contact) {
+        Log.e("ppppdelete", "$contact.id")
+        val db = this.writableDatabase
+        db.delete(TABLE_NAME, "id=" + contact.id, null)
+        db.close()
     }
 
     fun insertContact(contact: Contact) : Long {
@@ -87,14 +95,15 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
     }
 
     //fun updateContact(ct: ContactAdapter.ContactViewHolder) : Int {
-    fun updateContact(ct: Unit?) : Int {
+    fun updateContact(contact: Contact) : Int {
         val db = this.writableDatabase
 
-        val cv = ContentValues()
-        cv.put(COL_NAME, ct.name)
-        cv.put(COL_PHONE, ct.phone)
+        val cv = ContentValues().apply {
+            put(COL_NAME, contact.name)
+            put(COL_PHONE, contact.phone)
+        }
 
-        val success = db.update(TABLE_NAME, cv, "id=" + ct.id, null)
+        val success = db.update(TABLE_NAME, cv, "id=" + contact.id, null)
         db.close()
         return success
     }

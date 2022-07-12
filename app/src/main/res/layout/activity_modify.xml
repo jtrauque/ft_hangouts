@@ -7,6 +7,7 @@
     tools:context=".Modify"
     android:background="@drawable/pack1">
 
+
     <ImageView
         android:id="@+id/appLogo"
         android:layout_width="150dp"
@@ -15,37 +16,37 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"/>
 
-    <EditText
-        android:id="@+id/usedName"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/appLogo"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/edt_background"
-        android:hint="Name"
-        android:paddingLeft="10dp" />
+        <EditText
+            android:id="@+id/usedName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/appLogo"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edt_background"
+            android:hint="Name"
+            android:paddingLeft="10dp" />
 
-    <EditText
-        android:id="@+id/usedPhone"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/usedName"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:hint="Phone number"
-        android:background="@drawable/edt_background"
-        android:paddingLeft="10dp"/>
+        <EditText
+            android:id="@+id/usedPhone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/usedName"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/edt_background"
+            android:paddingLeft="10dp"
+            android:hint="Phone Number" />
 
-    <Button
-        android:id="@+id/btnSaveMod"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/usedPhone"
-        android:text="Save"
-        android:textSize="20dp"
-        android:background="@drawable/btn_shape"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
+        <Button
+            android:id="@+id/btnSaveMod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/usedPhone"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_shape"
+            android:text="Save"
+            android:textSize="20dp" />
 </RelativeLayout>

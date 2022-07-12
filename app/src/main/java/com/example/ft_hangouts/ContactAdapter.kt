@@ -3,6 +3,7 @@ package com.example.ft_hangouts
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -28,8 +29,8 @@ class ContactAdapter (var context: Context, private val ct: List<Contact>, val o
             btnDelete.setOnClickListener { deleteItem(position)}
             btnModify.setOnClickListener {
                 val intent = Intent(context, Modify::class.java)
-                intent.putExtra(ct.name, "name")
-                intent.putExtra(ct.phone, "phone")
+                intent.putExtra("name", ct.name)
+                intent.putExtra("phone", ct.phone)
                 context.startActivity(intent)
             }
         }
@@ -54,7 +55,6 @@ class ContactAdapter (var context: Context, private val ct: List<Contact>, val o
         val ct = ctList[position]
         holder.binView(ct, position)
         holder.itemView.setOnClickListener{ onClickItem?.invoke(ct) }
-
     }
 
     override fun getItemCount(): Int {

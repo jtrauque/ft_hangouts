@@ -24,22 +24,14 @@ class MainActivity : AppCompatActivity() {
 
         initView()
         initRecycleView()
-        //sqliteHelper = DataBaseHandler(this)
         btnAdd.setOnClickListener(){
             val intent = Intent(this, Save::class.java)
             startActivity(intent)
         }
 
-      //  btnModify.setOnClickListener {
-          //  ct = getContacts()
-            //    sqliteHelper.updateContact(ct)
-      //  }
         getContacts()
         adapter?.setOnClickItem {
             Toast.makeText(this, it.name, Toast.LENGTH_SHORT).show()
-           // sqliteHelper.updateContact(it)
-            //Save.edName.setText(it.name)
-        //    edPhone.setText(it.phone)
             ct = it
         }
     }
@@ -47,15 +39,19 @@ class MainActivity : AppCompatActivity() {
     private fun getContacts() {
         //get all contacts
         val ctList = sqliteHelper.getAllContact()
+        if (adapter == null)
+            return
         Log.e("pppp", "${ctList.size}")
         adapter?.addItems(ctList){position -> deleteItem(position as Int)}
         adapter?.addItems(ctList){position -> modifyItem(position as Int)}
     }
 
     private fun deleteItem(position: Int) {
+        Log.e("ppppdeleteI", "$position")
         if (::sqliteHelper.isInitialized) {
             val ctList = sqliteHelper.getAllContact()
-            ctList.removeAt(position)
+            sqliteHelper.deleteContact(ctList[position])
+            //ctList.removeAt(position)
             adapter?.setItems(ctList)
         }
     }
@@ -65,7 +61,6 @@ class MainActivity : AppCompatActivity() {
             sqliteHelper.updateContact(ctList[position])
         }
     }
-
 
     private fun initRecycleView() {
         recyclerView.layoutManager = LinearLayoutManager(this)
