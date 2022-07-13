@@ -46,14 +46,14 @@ class MainActivity : AppCompatActivity() {
         adapter?.addItems(ctList){position -> modifyItem(position as Int)}
     }
 
-    private fun deleteItem(position: Int) {
+    fun deleteItem(position: Int) {
         Log.e("ppppdeleteI", "$position")
-        if (::sqliteHelper.isInitialized) {
+        /*if (::sqliteHelper.isInitialized) {
             val ctList = sqliteHelper.getAllContact()
             sqliteHelper.deleteContact(ctList[position])
             //ctList.removeAt(position)
             adapter?.setItems(ctList)
-        }
+        }*/
     }
     private fun modifyItem(position: Int) {
         if (::sqliteHelper.isInitialized) {
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecycleView() {
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = ContactAdapter(this, sqliteHelper.getAllContact(), {
+        adapter = ContactAdapter(this, sqliteHelper, {
                 position -> deleteItem(position as Int)}, {
                 position -> modifyItem(position as Int)} )
         recyclerView.adapter = adapter

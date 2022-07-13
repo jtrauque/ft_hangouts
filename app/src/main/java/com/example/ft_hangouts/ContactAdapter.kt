@@ -15,16 +15,18 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.core.content.ContextCompat.startActivity
 
 
-class ContactAdapter (var context: Context, private val ct: List<Contact>, val onClickDelete: (Int) -> Unit, val onClickModify: (Int) -> Unit) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>(){
+class ContactAdapter (var context: Context, private val data: DataBaseHandler, val onClickDelete: (Int) -> Unit, val onClickModify: (Int) -> Unit) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>(){
     inner class ContactViewHolder(private var view: View) : RecyclerView.ViewHolder(view) {
         private var name = view.findViewById<TextView>(R.id.tvName)
         private var phone = view.findViewById<TextView>(R.id.tvPhone)
+        private var ct = data.getAllContact()
 
         fun binView(ct : Contact, position : Int) {
             val btnDelete = view.findViewById<Button>(R.id.btnDelete)
             val btnModify = view.findViewById<Button>(R.id.btnModify)
             name.text = ct.name
             phone.text = ct.phone
+
 
             btnDelete.setOnClickListener { deleteItem(position)}
             btnModify.setOnClickListener {
@@ -68,6 +70,9 @@ class ContactAdapter (var context: Context, private val ct: List<Contact>, val o
 
     fun deleteItem(position: Int) {
         this.ctList.removeAt(position)
+        data.deleteContact(ctList[position])
+
+        //adapter?.setItems(ctList)
         notifyDataSetChanged()
     }
 }
