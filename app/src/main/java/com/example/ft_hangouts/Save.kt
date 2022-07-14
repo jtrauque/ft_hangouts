@@ -13,7 +13,8 @@ class Save : AppCompatActivity() {
     private lateinit var edName: EditText
     private lateinit var edPhone: EditText
     private lateinit var btnSave: Button
-    private lateinit var sqliteHelper: DataBaseHandler
+    lateinit var sqliteHelper: DataBaseHandler
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +24,11 @@ class Save : AppCompatActivity() {
         sqliteHelper = DataBaseHandler(this)
         btnSave.setOnClickListener(){
             addContact()
+           // MainActivity().getData()
+//           ContactAdapter(this, sqliteHelper, {
+//                null}, {
+//               null}).notifyDataSetChanged()//
+
         }
     }
 
@@ -45,14 +51,13 @@ class Save : AppCompatActivity() {
         } else {
             val ct = Contact(name = name, phone = phone)
             val status = sqliteHelper.insertContact(ct)
-            if (status < -1) {
+            if (status == (-1).toLong()) {
+                Toast.makeText(this, "Record not saved...", Toast.LENGTH_SHORT).show()
+            } else {
                 Toast.makeText(this, "Contact created...", Toast.LENGTH_SHORT).show()
                 clearEditText()
-            } else {
-                Toast.makeText(this, "Record not saved...", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
     private fun clearEditText() {

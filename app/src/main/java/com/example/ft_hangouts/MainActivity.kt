@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 
 class MainActivity : AppCompatActivity() {
     lateinit var btnAdd:ImageButton
@@ -28,7 +29,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, Save::class.java)
             startActivity(intent)
         }
-
         getContacts()
         adapter?.setOnClickItem {
             Toast.makeText(this, it.name, Toast.LENGTH_SHORT).show()
@@ -46,19 +46,22 @@ class MainActivity : AppCompatActivity() {
         adapter?.addItems(ctList){position -> modifyItem(position as Int)}
     }
 
-    fun deleteItem(position: Int) {
+    fun getData()  {
+        getContacts()
+    }
+
+    private fun deleteItem(position: Int) {
         Log.e("ppppdeleteI", "$position")
-        /*if (::sqliteHelper.isInitialized) {
+        if (::sqliteHelper.isInitialized) {
             val ctList = sqliteHelper.getAllContact()
-            sqliteHelper.deleteContact(ctList[position])
-            //ctList.removeAt(position)
-            adapter?.setItems(ctList)
-        }*/
+          //  adapter?.setItems(ctList)
+        }
     }
     private fun modifyItem(position: Int) {
         if (::sqliteHelper.isInitialized) {
             val ctList = sqliteHelper.getAllContact()
             sqliteHelper.updateContact(ctList[position])
+            adapter?.setItems(ctList)
         }
     }
 
@@ -66,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = ContactAdapter(this, sqliteHelper, {
                 position -> deleteItem(position as Int)}, {
-                position -> modifyItem(position as Int)} )
+                position -> modifyItem(position as Int)})
         recyclerView.adapter = adapter
     }
 

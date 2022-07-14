@@ -6,6 +6,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.os.Build.ID
 import android.util.Log
 import android.widget.Toast
 import java.lang.Exception
@@ -95,17 +96,17 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
     }
 
     //fun updateContact(ct: ContactAdapter.ContactViewHolder) : Int {
-    fun updateContact(contact: Contact) : Int {
+    fun updateContact( contact: Contact) : Int {
         val db = this.writableDatabase
 
-        val cv = ContentValues().apply {
-            put(COL_NAME, contact.name)
-            put(COL_PHONE, contact.phone)
-        }
+        Log.e("updateContact", contact.id.toString())
+        var cv = ContentValues()
+        cv.put(COL_ID, contact.id)
+        cv.put(COL_NAME, contact.name)
+        cv.put(COL_PHONE, contact.phone)
 
-        val success = db.update(TABLE_NAME, cv, "id=" + contact.id, null)
+        val success = db.update(TABLE_NAME, cv, "id=" + contact.id.toString(), null)
         db.close()
         return success
     }
-
 }

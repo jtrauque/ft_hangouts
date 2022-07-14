@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.view.menu.MenuView
+
 import androidx.recyclerview.widget.RecyclerView
 import androidx.core.content.ContextCompat.startActivity
 
@@ -27,12 +28,16 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
             name.text = ct.name
             phone.text = ct.phone
 
+            btnDelete.setOnClickListener {
+                Log.e("plop", position.toString())
+                deleteItem(position)
+            }
 
-            btnDelete.setOnClickListener { deleteItem(position)}
             btnModify.setOnClickListener {
                 val intent = Intent(context, Modify::class.java)
                 intent.putExtra("name", ct.name)
                 intent.putExtra("phone", ct.phone)
+                intent.putExtra("id", ct.id)
                 context.startActivity(intent)
             }
         }
@@ -49,6 +54,7 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
     fun setOnClickItem(callback: (Contact)->Unit) {
         this.onClickItem = callback
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ContactViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.card_items_contacts, parent, false)
     )
@@ -69,10 +75,8 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
     }
 
     fun deleteItem(position: Int) {
-        this.ctList.removeAt(position)
         data.deleteContact(ctList[position])
-
-        //adapter?.setItems(ctList)
+        this.ctList.removeAt(position)
         notifyDataSetChanged()
     }
 }
