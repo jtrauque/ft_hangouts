@@ -30,9 +30,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         getContacts()
+        //adapter?.notifyDataSetChanged()
         adapter?.setOnClickItem {
             Toast.makeText(this, it.name, Toast.LENGTH_SHORT).show()
             ct = it
+            getData()//
         }
     }
 
@@ -46,8 +48,12 @@ class MainActivity : AppCompatActivity() {
         adapter?.addItems(ctList){position -> modifyItem(position as Int)}
     }
 
-    fun getData()  {
-        getContacts()
+    private fun getData()  {
+        if (adapter == null || !::sqliteHelper.isInitialized)
+            return
+        val ctList = sqliteHelper.getAllContact()
+        adapter?.addItems(ctList){null}
+        adapter?.addItems(ctList){null}
     }
 
     private fun deleteItem(position: Int) {
@@ -57,6 +63,7 @@ class MainActivity : AppCompatActivity() {
           //  adapter?.setItems(ctList)
         }
     }
+
     private fun modifyItem(position: Int) {
         if (::sqliteHelper.isInitialized) {
             val ctList = sqliteHelper.getAllContact()

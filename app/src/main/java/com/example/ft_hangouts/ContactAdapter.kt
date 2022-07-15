@@ -39,6 +39,8 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
                 intent.putExtra("phone", ct.phone)
                 intent.putExtra("id", ct.id)
                 context.startActivity(intent)
+                //this.ct = data.getAllContact()
+                //notifyItemChanged(position)
             }
         }
     }
@@ -47,7 +49,7 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
     private var ctList: ArrayList<Contact> = ArrayList()
 
     fun addItems(ctList: List<Contact>, param: (Any) -> Unit) {
-        this.ctList = ctList as ArrayList<Contact>
+        this.ctList = data.getAllContact() as ArrayList<Contact> //ctList
         notifyDataSetChanged()
     }
 
