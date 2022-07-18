@@ -29,13 +29,18 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, Save::class.java)
             startActivity(intent)
         }
-        getContacts()
-        //adapter?.notifyDataSetChanged()
         adapter?.setOnClickItem {
             Toast.makeText(this, it.name, Toast.LENGTH_SHORT).show()
             ct = it
-            getData()//
         }
+    }
+    private var reloadNeeded: Boolean = true
+
+    @Override
+    public override fun onResume() {
+        super.onResume()
+
+        getContacts()
     }
 
     private fun getContacts() {
