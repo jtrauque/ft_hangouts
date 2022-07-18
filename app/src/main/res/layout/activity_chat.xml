@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:background="@drawable/pack1">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/btnView"
+            android:layout_width="388dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/btn_shape"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:text="Chat"
+            android:textColor="@color/blue"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/messageRecycleView"
+            android:layout_width="347dp"
+            android:layout_height="594dp"
+            android:layout_marginStart="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_alignParentBottom= "true">
+
+    <EditText
+        android:id="@+id/messageBox"
+        android:layout_width="339dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_weight="85"
+        android:hint="Type a message"
+        android:paddingLeft="10dp"
+        android:textColor="@color/blue"/>
+
+    <ImageView
+        android:id="@+id/sendBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/send"
+        app:tint="@color/blue"/>
+
+    </LinearLayout>
+
+</LinearLayout>

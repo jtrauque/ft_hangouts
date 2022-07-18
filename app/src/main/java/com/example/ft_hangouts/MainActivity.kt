@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 
 class MainActivity : AppCompatActivity() {
-    lateinit var btnAdd:ImageButton
+    private lateinit var btnAdd:ImageButton
+    private lateinit var btnSms:ImageButton
 
     private lateinit var sqliteHelper: DataBaseHandler
     private lateinit var recyclerView: RecyclerView
@@ -29,17 +30,19 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, Save::class.java)
             startActivity(intent)
         }
+        btnSms.setOnClickListener(){
+            val intent = Intent(this, ChannelActivity::class.java)
+            startActivity(intent)
+        }
         adapter?.setOnClickItem {
             Toast.makeText(this, it.name, Toast.LENGTH_SHORT).show()
             ct = it
         }
     }
-    private var reloadNeeded: Boolean = true
 
     @Override
     public override fun onResume() {
         super.onResume()
-
         getContacts()
     }
 
@@ -87,6 +90,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initView() {
         btnAdd = findViewById<ImageButton>(R.id.btnAdd)
+        btnSms = findViewById<ImageButton>(R.id.btnSms)
         recyclerView = findViewById((R.id.recycleView))
     }
 }

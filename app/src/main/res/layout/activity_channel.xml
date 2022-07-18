@@ -8,15 +8,6 @@
     tools:context=".MainActivity"
     android:background="@drawable/pack1">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:gravity="center_vertical"
-        android:text="Welcome to ft_hangouts"
-        android:textSize="30sp" />
-
     <ImageView
         android:id="@+id/appLogo"
         android:layout_width="wrap_content"
@@ -29,28 +20,30 @@
 
         <TextView
             android:id="@+id/btnView"
-            android:layout_width="300dp"
+            android:layout_width="312dp"
             android:layout_height="35dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="13dp"
-            android:elevation="10dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/btn_shape"
+            android:elevation="10dp"
             android:gravity="center"
-            android:text="All Contacts"
-            android:textStyle="bold"
+            android:text="Chat"
             android:textColor="@color/blue"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <ImageButton
-            android:id="@+id/btnAdd"
-            android:layout_width="53dp"
-            android:layout_height="50dp"
+            android:id="@+id/btnAddChat"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
             android:background="@null"
+            android:layout_gravity="center_vertical"
             android:autofillHints="add"
-            android:contentDescription="add"
-            android:src="@drawable/add"
+            android:contentDescription="addChat"
+            android:src="@drawable/add_circle"
             app:tint="@color/blue"/>
 
     </LinearLayout>
@@ -62,30 +55,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleView"
             android:layout_width="347dp"
-            android:layout_height="388dp"
+            android:layout_height="match_parent"
             android:layout_marginStart="20dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/card_items_contacts" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:background="@color/gray"
-        android:elevation="10dp">
-        <ImageButton
-            android:id="@+id/btnSms"
-            android:layout_width="53dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginStart="310dp"
-            android:layout_gravity="center_vertical"
-            android:background="@null"
-            android:autofillHints="sms"
-            android:contentDescription="sms"
-            android:src="@drawable/sms"
-            app:tint="@color/blue" />
+            tools:listitem="@layout/card_items_channels" />
     </LinearLayout>
 
 </LinearLayout>
