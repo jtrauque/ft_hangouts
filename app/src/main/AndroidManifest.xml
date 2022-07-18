@@ -27,6 +27,12 @@
         <activity
             android:name=".Modify"
             android:exported="false"> </activity>
+        <activity
+            android:name=".ChannelActivity"
+            android:exported="false"> </activity>
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false"> </activity>
     </application>
 
 </manifest>

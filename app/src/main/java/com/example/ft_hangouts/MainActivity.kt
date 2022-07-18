@@ -56,14 +56,6 @@ class MainActivity : AppCompatActivity() {
         adapter?.addItems(ctList){position -> modifyItem(position as Int)}
     }
 
-    private fun getData()  {
-        if (adapter == null || !::sqliteHelper.isInitialized)
-            return
-        val ctList = sqliteHelper.getAllContact()
-        adapter?.addItems(ctList){null}
-        adapter?.addItems(ctList){null}
-    }
-
     private fun deleteItem(position: Int) {
         Log.e("ppppdeleteI", "$position")
         if (::sqliteHelper.isInitialized) {

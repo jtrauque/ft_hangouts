@@ -33,22 +33,29 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
   }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val createTable = "CREATE TABLE " + TABLE_NAME + " (" +
+        val createTable = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
                 COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_NAME + " VARCHAR(256), " +
-                COL_PHONE + " VARCHAR(256))";
+                COL_PHONE + " VARCHAR(256));"
 
-       val createTableMess = "CREATE TABLE " + TABLE_MESS + " (" +
-                COL_SENDID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COL_RECID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COL_MESSAGE + " VARCHAR(256)), " +
-                COL_MESSAGEID + " INTEGER PRIMARY KEY AUTOINCREMENT";
+        val createMess = "CREATE TABLE IF NOT EXISTS " + TABLE_MESS + " (" +
+                COL_SENDID + " INTEGER, " +
+                COL_RECID + " INTEGER, " +
+                COL_MESSAGE + " VARCHAR(256), " +
+                COL_MESSAGEID + " INTEGER PRIMARY KEY AUTOINCREMENT);"
 
-        db?.execSQL(createTable)
+        Log.e("createTable = ", createTable)
+        Log.e("createTableMess = ", createMess)
+
+      //  db?.execSQL(createTable)
+        db?.execSQL(createMess)
+        val message:Message = Message("Ola comment va", 0, 2)
+        newMessage(message)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
         db!!.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_MESS")
         onCreate(db)
     }
 
@@ -56,6 +63,13 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         Log.e("ppppdelete", "$contact.id")
         val db = this.writableDatabase
         db.delete(TABLE_NAME, "id=" + contact.id, null)
+        db.close()
+    }
+
+    fun deleteConv(contact: Contact) {
+        Log.e("deleteConv", "$contact.id")
+        val db = this.writableDatabase
+        db.delete(TABLE_MESS, "id=" + contact.id, null)
         db.close()
     }
 
@@ -97,6 +111,38 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
 
         val cursor: Cursor?
 
+        try{
+            cursor = db.rawQuery(selectQuery, null)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            db.execSQL(selectQuery)
+            return ArrayList()
+        }
+
+        var id : Int
+        var name: String
+        var phone: String
+
+        if (cursor.moveToFirst()){
+            do {
+                id = cursor.getInt(cursor.getColumnIndex("id"))
+                name = cursor.getString(cursor.getColumnIndex("name"))
+                phone = cursor.getString(cursor.getColumnIndex("phone"))
+
+                val ct = Contact(id = id, name = name, phone = phone)
+                ctList.add(ct)
+            } while (cursor.moveToNext())
+        }
+        return ctList
+    }
+
+    @SuppressLint("Range")
+    fun getAllConv() : ArrayList<Contact> {
+        val ctList: ArrayList<Contact> = ArrayList()
+        val selectQuery = "SELECT * FROM $TABLE_MESS"
+        val db = this.readableDatabase
+
+        val cursor: Cursor?
         try{
             cursor = db.rawQuery(selectQuery, null)
         } catch (e: Exception) {

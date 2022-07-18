@@ -48,10 +48,6 @@ class MessageAdapter(val context: Context, private val messageList: ArrayList<Me
         } else {
             return ITEM_RECIEVE
         }
-
-        //if(userid == sender)
-        //return ITEM_SENT
-        //else return ITEM_RECIEVE
     }
     override fun getItemCount(): Int {
         return messageList.size
