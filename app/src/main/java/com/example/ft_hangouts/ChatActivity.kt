@@ -7,7 +7,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 
-class ChannelActivity : AppCompatActivity() {
+class ChatActivity : AppCompatActivity() {
 
     private lateinit var messageRecyclerView: RecyclerView
     private lateinit var messageBox: EditText
@@ -21,19 +21,22 @@ class ChannelActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_channel)
+        setContentView(R.layout.activity_chat)
 
         val name = intent.getStringExtra("name")
         val receiverId = intent.getIntExtra("id", 0)
-        val phone = intent.getStringExtra("phone")
 
         sqliteHelper = DataBaseHandler(this)
         val senderId: Int = 0 // a lier avec le base de donnee
         // senderRoom = receiverId + senderId
         // receiverRoom = senderId + receiverId
+        supportActionBar?.title = name //to have the receiver name on top of your screen
 
-
-
+        messageRecyclerView = findViewById(R.id.messageRecycleView)
+        messageBox = findViewById(R.id.messageBox)
+        sendButton = findViewById(R.id.sendBtn)
+        messageList = ArrayList()
+        messageAdapter = MessageAdapter(this, messageList)
 
         sendButton.setOnClickListener {
             val message = messageBox.text.toString()

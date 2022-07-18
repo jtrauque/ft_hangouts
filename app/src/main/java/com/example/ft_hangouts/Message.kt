@@ -1,12 +1,18 @@
 package com.example.ft_hangouts
 
-class Message {
-    var message: String? = null
-    var senderId: String? = null
-    constructor() {}
+import java.util.*
 
-    constructor(message: String?, senderId: String?) {
-        this.message = message
-        this.senderId = senderId
+data class Message (
+    var message: String = "",
+    var senderId: Int = 0,
+    var receiverId: Int = 0,
+    var messageId : Int = getAutoId()
+) {
+
+    companion object{
+        fun getAutoId(): Int {
+            val random = Random()
+            return random.nextInt(100)
+        }
     }
 }

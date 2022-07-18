@@ -24,11 +24,6 @@ class Save : AppCompatActivity() {
         sqliteHelper = DataBaseHandler(this)
         btnSave.setOnClickListener(){
             addContact()
-           // MainActivity().getData()
-//           ContactAdapter(this, sqliteHelper, {
-//                null}, {
-//               null}).notifyDataSetChanged()//
-
         }
     }
 

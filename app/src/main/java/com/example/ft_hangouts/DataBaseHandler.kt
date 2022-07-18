@@ -25,6 +25,11 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
       private const val COL_NAME = "name"
       private const val COL_PHONE = "phone"
       private const val COL_ID = "id"
+      private const val TABLE_MESS = "Messages"
+      private const val COL_SENDID = "send"
+      private const val COL_RECID = "received"
+      private const val COL_MESSAGE = "message"
+      private const val COL_MESSAGEID = "messageId"
   }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -32,6 +37,12 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
                 COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_NAME + " VARCHAR(256), " +
                 COL_PHONE + " VARCHAR(256))";
+
+       val createTableMess = "CREATE TABLE " + TABLE_MESS + " (" +
+                COL_SENDID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COL_RECID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COL_MESSAGE + " VARCHAR(256)), " +
+                COL_MESSAGEID + " INTEGER PRIMARY KEY AUTOINCREMENT";
 
         db?.execSQL(createTable)
     }
@@ -45,6 +56,22 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         Log.e("ppppdelete", "$contact.id")
         val db = this.writableDatabase
         db.delete(TABLE_NAME, "id=" + contact.id, null)
+        db.close()
+    }
+
+    fun newMessage(message: Message) {
+        val db = this.writableDatabase
+        var cv = ContentValues()
+        cv.put(COL_SENDID, message.senderId)
+        cv.put(COL_RECID, message.receiverId)
+        cv.put(COL_MESSAGE, message.message)
+        cv.put(COL_MESSAGEID, message.messageId)
+
+        var result = db.insert(TABLE_MESS, null, cv)
+        if (result == (-1).toLong())
+            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
+        else
+            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
         db.close()
     }
 

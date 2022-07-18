@@ -65,11 +65,10 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
         val ct = ctList[position]
         holder.binView(ct, position)
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, ChannelActivity::class.java)
+            val intent = Intent(context, ChatActivity::class.java)
 
             intent.putExtra("name", ct.name)
             intent.putExtra("id", ct.id)
-            intent.putExtra("phone", ct.phone)
 
             context.startActivity(intent) //to chat with the person
             // onClickItem?.invoke(ct) } to get the name pop up

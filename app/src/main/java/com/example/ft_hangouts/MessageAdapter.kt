@@ -43,6 +43,12 @@ class MessageAdapter(val context: Context, private val messageList: ArrayList<Me
     override fun getItemViewType(position: Int): Int { //
         val currentMessage = messageList[position]
 
+        if (messageList[position].senderId == 0) {
+            return ITEM_SENT
+        } else {
+            return ITEM_RECIEVE
+        }
+
         //if(userid == sender)
         //return ITEM_SENT
         //else return ITEM_RECIEVE
