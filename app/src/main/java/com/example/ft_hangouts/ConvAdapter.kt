@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 class ConvAdapter(val context: Context, private val data: DataBaseHandler): RecyclerView.Adapter<ConvAdapter.ConvViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConvAdapter.ConvViewHolder {
-        val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.activity_channel, parent, false)
+        val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.card_items_channels, parent, false)
         return ConvViewHolder(inflatedView)
     }
 
@@ -38,6 +38,7 @@ class ConvAdapter(val context: Context, private val data: DataBaseHandler): Recy
     inner class ConvViewHolder(private var view: View) : RecyclerView.ViewHolder(view) {
         private var name = view.findViewById<TextView>(R.id.messName)
         private var ct = data.getAllConv()
+
 
         fun binView(ct: Contact, position: Int) {
             val btnDelete = view.findViewById<Button>(R.id.btnDelete)

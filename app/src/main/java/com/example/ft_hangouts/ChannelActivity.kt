@@ -14,17 +14,17 @@ class ChannelActivity : AppCompatActivity() {
     lateinit var sqliteHelper: DataBaseHandler
     private var adapter: ConvAdapter? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_channel)
 
         sqliteHelper = DataBaseHandler(this)
 
-        convRecyclerView = findViewById((R.id.convRecycleView))
+        convRecyclerView = findViewById(R.id.convRecycleView)
         convRecyclerView.layoutManager = LinearLayoutManager(this)
         adapter = ConvAdapter(this, sqliteHelper)
         convRecyclerView.adapter = adapter
-
     }
 }
 
