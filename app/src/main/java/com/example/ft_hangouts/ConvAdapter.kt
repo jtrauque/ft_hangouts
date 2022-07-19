@@ -36,11 +36,12 @@ class ConvAdapter(val context: Context, private val data: DataBaseHandler): Recy
     }
 
     inner class ConvViewHolder(private var view: View) : RecyclerView.ViewHolder(view) {
-        private var name = view.findViewById<TextView>(R.id.tvName)
+        private var name = view.findViewById<TextView>(R.id.messName)
         private var ct = data.getAllConv()
 
         fun binView(ct: Contact, position: Int) {
             val btnDelete = view.findViewById<Button>(R.id.btnDelete)
+            Log.e("name = ", ct.name)
             name.text = ct.name
 
             btnDelete.setOnClickListener {

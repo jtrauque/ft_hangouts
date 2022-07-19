@@ -6,7 +6,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.os.Build.ID
 import android.util.Log
 import android.widget.Toast
 import java.lang.Exception
@@ -47,10 +46,10 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         Log.e("createTable = ", createTable)
         Log.e("createTableMess = ", createMess)
 
-      //  db?.execSQL(createTable)
+        db?.execSQL(createTable)
         db?.execSQL(createMess)
-        val message:Message = Message("Ola comment va", 0, 2)
-        newMessage(message)
+        //val message:Message = Message("Ola comment va", 0, 2)
+       // newMessage(message)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
@@ -64,6 +63,10 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         val db = this.writableDatabase
         db.delete(TABLE_NAME, "id=" + contact.id, null)
         db.close()
+    }
+
+    fun deleteTable() {
+        context.deleteDatabase(DATABASE_NAME)
     }
 
     fun deleteConv(contact: Contact) {
@@ -151,21 +154,50 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
             return ArrayList()
         }
 
-        var id : Int
-        var name: String
-        var phone: String
+        var receivedId : Int
 
         if (cursor.moveToFirst()){
             do {
-                id = cursor.getInt(cursor.getColumnIndex("id"))
-                name = cursor.getString(cursor.getColumnIndex("name"))
-                phone = cursor.getString(cursor.getColumnIndex("phone"))
-
-                val ct = Contact(id = id, name = name, phone = phone)
+                receivedId = cursor.getInt(cursor.getColumnIndex("received"))
+                Log.e("getallconv =", receivedId.toString())
+                val ct = getContact(receivedId)
+                Log.e("getallconv name=", ct.name)
                 ctList.add(ct)
             } while (cursor.moveToNext())
         }
         return ctList
+    }
+
+    @SuppressLint("Range")
+    fun getContact(id: Int) : Contact {
+        val ctList: ArrayList<Contact> = ArrayList()
+        val selectQuery = "SELECT * FROM $TABLE_NAME"
+        val db = this.readableDatabase
+
+        val cursor: Cursor?
+        try{
+            cursor = db.rawQuery(selectQuery, null)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            db.execSQL(selectQuery)
+            return Contact()
+        }
+
+        var name: String
+        var phone: String
+        var receivedId : Int
+
+        if (cursor.moveToFirst()) {
+            do {
+                receivedId = cursor!!.getInt(cursor.getColumnIndex("id"))
+                name = cursor.getString(cursor.getColumnIndex("name"))
+                phone = cursor.getString(cursor.getColumnIndex("phone"))
+                if (receivedId == id) {
+                    return Contact(id = receivedId, name = name, phone = phone)
+                }
+            } while (cursor?.moveToNext()!!)
+        }
+        return Contact()
     }
 
     //fun updateContact(ct: ContactAdapter.ContactViewHolder) : Int {
