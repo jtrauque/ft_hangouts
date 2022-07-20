@@ -169,6 +169,44 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
     }
 
     @SuppressLint("Range")
+    fun getMessages(exchangeId: Int) : ArrayList<Message> {
+        val messList: ArrayList<Message> = ArrayList()
+        val selectQuery = "SELECT * FROM $TABLE_MESS"
+        val db = this.readableDatabase
+
+        val cursor: Cursor?
+        try{
+            cursor = db.rawQuery(selectQuery, null)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            db.execSQL(selectQuery)
+            return ArrayList()
+        }
+
+        var receivedId : Int
+        var senderId : Int
+        var message : String
+        var messageId: Int
+
+        if (cursor.moveToFirst()){
+            do {
+                receivedId = cursor.getInt(cursor.getColumnIndex("received"))
+                senderId = cursor.getInt(cursor.getColumnIndex("send"))
+                message = cursor.getString(cursor.getColumnIndex("message"))
+                messageId = cursor.getInt(cursor.getColumnIndex("messageId"))
+
+                Log.e("getmess =", receivedId.toString())
+                if (receivedId == exchangeId) {
+                    val ct = Message(message, senderId, receivedId, messageId)
+                    Log.e("getmess mess=", message)
+                    messList.add(ct)
+                }
+            } while (cursor.moveToNext())
+        }
+        return messList
+    }
+
+    @SuppressLint("Range")
     fun getContact(id: Int) : Contact {
         val ctList: ArrayList<Contact> = ArrayList()
         val selectQuery = "SELECT * FROM $TABLE_NAME"

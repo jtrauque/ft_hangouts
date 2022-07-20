@@ -39,7 +39,7 @@ class ChatActivity : AppCompatActivity() {
         messageBox = findViewById(R.id.messageBox)
         sendButton = findViewById(R.id.sendBtn)
         messageList = ArrayList()
-        messageAdapter = MessageAdapter(this, messageList)
+        messageAdapter = MessageAdapter(this, sqliteHelper)
 
         //add data to recycleView
 
@@ -48,8 +48,11 @@ class ChatActivity : AppCompatActivity() {
             val messageObject = Message(message, senderId, receiverId)
 
             sqliteHelper.newMessage(messageObject)
+            messageAdapter.add(receiverId)
             messageBox.setText("")
         }
     }
+
+
 }
 
