@@ -63,6 +63,7 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val ct = ctList[position]
+
         holder.binView(ct, position)
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ChatActivity::class.java)

@@ -23,10 +23,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         sqliteHelper = DataBaseHandler(this)
-       // sqliteHelper.deleteTable()
+        sqliteHelper.deleteTable()
 
         initView()
         initRecycleView()
+
         btnAdd.setOnClickListener(){
             val intent = Intent(this, Save::class.java)
             startActivity(intent)
@@ -52,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         val ctList = sqliteHelper.getAllContact()
         if (adapter == null)
             return
+
         Log.e("pppp", "${ctList.size}")
         adapter?.addItems(ctList){position -> deleteItem(position as Int)}
         adapter?.addItems(ctList){position -> modifyItem(position as Int)}

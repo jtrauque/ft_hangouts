@@ -29,6 +29,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
       private const val COL_RECID = "received"
       private const val COL_MESSAGE = "message"
       private const val COL_MESSAGEID = "messageId"
+      private const val COL_DATE = "date"
   }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -41,15 +42,14 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
                 COL_SENDID + " INTEGER, " +
                 COL_RECID + " INTEGER, " +
                 COL_MESSAGE + " VARCHAR(256), " +
-                COL_MESSAGEID + " INTEGER PRIMARY KEY AUTOINCREMENT);"
+                COL_MESSAGEID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COL_DATE + " VARCHAR(256)); "
 
         Log.e("createTable = ", createTable)
         Log.e("createTableMess = ", createMess)
 
         db?.execSQL(createTable)
         db?.execSQL(createMess)
-        //val message:Message = Message("Ola comment va", 0, 2)
-       // newMessage(message)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
@@ -83,6 +83,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         cv.put(COL_RECID, message.receiverId)
         cv.put(COL_MESSAGE, message.message)
         cv.put(COL_MESSAGEID, message.messageId)
+        cv.put(COL_DATE, message.date)
 
         var result = db.insert(TABLE_MESS, null, cv)
         if (result == (-1).toLong())
@@ -187,6 +188,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         var senderId : Int
         var message : String
         var messageId: Int
+        var date : String
 
         if (cursor.moveToFirst()){
             do {
@@ -194,14 +196,16 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
                 senderId = cursor.getInt(cursor.getColumnIndex("send"))
                 message = cursor.getString(cursor.getColumnIndex("message"))
                 messageId = cursor.getInt(cursor.getColumnIndex("messageId"))
+                date = cursor.getString(cursor.getColumnIndex("date"))
 
                 Log.e("getmess =", receivedId.toString())
                 if (receivedId == exchangeId) {
-                    val ct = Message(message, senderId, receivedId, messageId)
-                    Log.e("getmess mess=", message)
+                    val ct = Message(message, senderId, receivedId, messageId, date)
+                    Log.e("getmess IIIIDDDD mess=", messageId.toString())
                     messList.add(ct)
                 }
             } while (cursor.moveToNext())
+            messList.sortBy{it.date}
         }
         return messList
     }

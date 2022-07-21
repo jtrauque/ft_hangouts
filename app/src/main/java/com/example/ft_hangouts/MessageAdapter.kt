@@ -32,6 +32,7 @@ class MessageAdapter(val context: Context, private val data: DataBaseHandler): R
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val currentMessage = messList[position]
+        Log.e("ON BIND=", position.toString() )
 
         if(holder.javaClass == SentViewHolder::class.java) { // if the current use is sent
             //do the stuff for sent
@@ -61,15 +62,18 @@ class MessageAdapter(val context: Context, private val data: DataBaseHandler): R
     fun add(id: Int) {
         Log.e("add MessageAdapt =", id.toString())
         this.messList = data.getMessages(id) as ArrayList<Message> //ctList
+        Log.e("MessageAdapt first =", this.messList[0].message)
         Log.e("MessageAdapt size =", this.messList.size.toString())
         notifyDataSetChanged()
     }
 
     inner class SentViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val sentMessage = itemView.findViewById<TextView>(R.id.sentMessage)
+
     }
 
     inner class ReceiveViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val receivedMessage = itemView.findViewById<TextView>(R.id.receivedMessage)
+
     }
 }

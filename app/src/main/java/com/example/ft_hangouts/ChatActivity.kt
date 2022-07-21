@@ -6,6 +6,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class ChatActivity : AppCompatActivity() {
@@ -27,7 +28,6 @@ class ChatActivity : AppCompatActivity() {
         sqliteHelper = DataBaseHandler(this)
         val senderId: Int = 0 // a lier avec le base de donnee
 
-     //   var text: TextView = findViewById(R.id.btnView)
         val name = intent.getStringExtra("name")
         val receiverId = intent.getIntExtra("id", 0)
 
@@ -36,19 +36,24 @@ class ChatActivity : AppCompatActivity() {
         supportActionBar?.title = name //to have the receiver name on top of your screen
 
         messageRecyclerView = findViewById(R.id.messageRecycleView)
+        messageRecyclerView.layoutManager = LinearLayoutManager(this)
         messageBox = findViewById(R.id.messageBox)
         sendButton = findViewById(R.id.sendBtn)
         messageList = ArrayList()
         messageAdapter = MessageAdapter(this, sqliteHelper)
+        messageRecyclerView.adapter = messageAdapter
 
         //add data to recycleView
 
         sendButton.setOnClickListener {
             val message = messageBox.text.toString()
             val messageObject = Message(message, senderId, receiverId)
+            val messageObjectReverse = Message(message, receiverId, senderId)
 
             sqliteHelper.newMessage(messageObject)
             messageAdapter.add(receiverId)
+            sqliteHelper.newMessage(messageObjectReverse)
+            messageAdapter.add(senderId)
             messageBox.setText("")
         }
     }
