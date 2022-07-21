@@ -51,9 +51,9 @@ class ChatActivity : AppCompatActivity() {
             val messageObjectReverse = Message(message, receiverId, senderId)
 
             sqliteHelper.newMessage(messageObject)
-            messageAdapter.add(receiverId)
+            messageAdapter.add(receiverId, senderId)
             sqliteHelper.newMessage(messageObjectReverse)
-            messageAdapter.add(senderId)
+            messageAdapter.add(senderId, receiverId)
             messageBox.setText("")
         }
     }

@@ -170,7 +170,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
     }
 
     @SuppressLint("Range")
-    fun getMessages(exchangeId: Int) : ArrayList<Message> {
+    fun getMessages(recId: Int, sendId: Int) : ArrayList<Message> {
         val messList: ArrayList<Message> = ArrayList()
         val selectQuery = "SELECT * FROM $TABLE_MESS"
         val db = this.readableDatabase
@@ -199,7 +199,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
                 date = cursor.getString(cursor.getColumnIndex("date"))
 
                 Log.e("getmess =", receivedId.toString())
-                if (receivedId == exchangeId) {
+                if (receivedId == recId || receivedId == sendId) {
                     val ct = Message(message, senderId, receivedId, messageId, date)
                     Log.e("getmess IIIIDDDD mess=", messageId.toString())
                     messList.add(ct)
