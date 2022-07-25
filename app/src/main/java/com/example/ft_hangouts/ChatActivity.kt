@@ -45,6 +45,7 @@ class ChatActivity : AppCompatActivity() {
         messageList = ArrayList()
         messageAdapter = MessageAdapter(this, sqliteHelper)
         messageRecyclerView.adapter = messageAdapter
+        messageAdapter?.add(receiverId, 0)
 
         //add data to recycleView
 

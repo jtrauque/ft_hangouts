@@ -201,7 +201,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
                 date = cursor.getString(cursor.getColumnIndex("date"))
 
                 Log.e("getmess =", receivedId.toString())
-                if (receivedId == recId || receivedId == sendId) {
+                if (receivedId == recId && senderId == 0 || (receivedId == sendId && senderId == recId)) {
                     val ct = Message(message, senderId, receivedId, messageId, date)
                     Log.e("getmess IIIIDDDD mess=", messageId.toString())
                     messList.add(ct)
