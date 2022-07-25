@@ -2,6 +2,13 @@
 
 ## Subject 
 
+*First project in Kotlin.*  
+
+I have to fulfill various tasks that will help me understand how a mobile app
+works. The goal is to make an app allowing to create a contact (containing at least 5
+details), edit it and delete it. Once the contact is recorded, I will have to be able to
+communicate with him through text messages.  
+
 • Create a contact.  
 • Edit a contact.  
 • Delete a contact.  
