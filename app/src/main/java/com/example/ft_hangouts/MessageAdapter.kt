@@ -64,6 +64,7 @@ class MessageAdapter(val context: Context, private val data: DataBaseHandler): R
     fun add(receiverid: Int, senderId: Int) {
         Log.e("add MessageAdapt =", receiverid.toString())
         this.messList = data.getMessages(senderId, receiverid) as ArrayList<Message> //ctList
+        this.messList += data.getMessages(receiverid, senderId) as ArrayList<Message> //ctList
         Log.e("MessageAdapt size =", this.messList.size.toString())
         notifyDataSetChanged()
     }

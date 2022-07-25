@@ -8,8 +8,15 @@
     android:orientation="vertical"
     tools:context=".ChatActivity"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-    android:background="@drawable/pack1">
+    android:background="@drawable/pack1"
+    android:fitsSystemWindows="true">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
