@@ -15,9 +15,10 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var messageBox: EditText
     private lateinit var sendButton: ImageView
     private lateinit var messageAdapter: MessageAdapter
+    //private lateinit var convAdapter: ConvAdapter
     private lateinit var messageList: ArrayList<Message>
     private lateinit var sqliteHelper: DataBaseHandler
-
+    private var receiverId: Int = 0
     var receiverRoom: Int = 0
     var senderRoom: Int = 0
 
@@ -29,12 +30,14 @@ class ChatActivity : AppCompatActivity() {
         val senderId: Int = 0 // a lier avec le base de donnee
 
         val name = intent.getStringExtra("name")
-        val receiverId = intent.getIntExtra("id", 0)
+        receiverId = intent.getIntExtra("id", 0)
 
        // senderRoom = receiverId + senderId
        // receiverRoom = senderId + receiverId
         supportActionBar?.title = name //to have the receiver name on top of your screen
 
+       // convAdapter = ConvAdapter(this, sqliteHelper)
+      //  convAdapter.addItems(sqliteHelper.getContact(receiverId))
         messageRecyclerView = findViewById(R.id.messageRecycleView)
         messageRecyclerView.layoutManager = LinearLayoutManager(this)
         messageBox = findViewById(R.id.messageBox)
@@ -57,6 +60,11 @@ class ChatActivity : AppCompatActivity() {
             messageBox.setText("")
         }
     }
+
+   // public override fun onResume() {
+   //     super.onResume()
+   //     sqliteHelper.getMessages(receiverId, 0)
+  //  }
 
 
 }

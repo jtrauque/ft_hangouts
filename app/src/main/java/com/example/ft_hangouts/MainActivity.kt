@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         sqliteHelper = DataBaseHandler(this)
-       // sqliteHelper.deleteTable()
+       //sqliteHelper.deleteTable()
 
         initView()
         initRecycleView()
@@ -63,7 +63,6 @@ class MainActivity : AppCompatActivity() {
         Log.e("ppppdeleteI", "$position")
         if (::sqliteHelper.isInitialized) {
             val ctList = sqliteHelper.getAllContact()
-          //  adapter?.setItems(ctList)
         }
     }
 

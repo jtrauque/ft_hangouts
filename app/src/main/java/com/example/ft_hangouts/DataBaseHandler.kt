@@ -160,10 +160,12 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         if (cursor.moveToFirst()){
             do {
                 receivedId = cursor.getInt(cursor.getColumnIndex("received"))
-                Log.e("getallconv =", receivedId.toString())
                 val ct = getContact(receivedId)
-                Log.e("getallconv name=", ct.name)
-                ctList.add(ct)
+                val find = ctList.contains(ct)
+                if (!find && receivedId != 0) {
+                    Log.e("getallconv name=", ct.name)
+                    ctList.add(ct)
+                }
             } while (cursor.moveToNext())
         }
         return ctList
@@ -212,7 +214,6 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
 
     @SuppressLint("Range")
     fun getContact(id: Int) : Contact {
-        val ctList: ArrayList<Contact> = ArrayList()
         val selectQuery = "SELECT * FROM $TABLE_NAME"
         val db = this.readableDatabase
 

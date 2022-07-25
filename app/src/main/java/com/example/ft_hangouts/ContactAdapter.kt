@@ -17,9 +17,11 @@ import androidx.core.content.ContextCompat.startActivity
 
 
 class ContactAdapter (var context: Context, private val data: DataBaseHandler, val onClickDelete: (Int) -> Unit, val onClickModify: (Int) -> Unit) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>(){
+
     inner class ContactViewHolder(private var view: View) : RecyclerView.ViewHolder(view) {
         private var name = view.findViewById<TextView>(R.id.tvName)
         private var phone = view.findViewById<TextView>(R.id.tvPhone)
+
         private var ct = data.getAllContact()
 
         fun binView(ct : Contact, position : Int) {
@@ -39,14 +41,13 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
                 intent.putExtra("phone", ct.phone)
                 intent.putExtra("id", ct.id)
                 context.startActivity(intent)
-                //this.ct = data.getAllContact()
-                //notifyItemChanged(position)
             }
         }
     }
 
     private var onClickItem: ((Contact) -> Unit)? = null
     private var ctList: ArrayList<Contact> = ArrayList()
+   // private var adapter: ConvAdapter? = null
 
     fun addItems(ctList: List<Contact>, param: (Any) -> Unit) {
         this.ctList = data.getAllContact() as ArrayList<Contact> //ctList
@@ -71,6 +72,7 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
             intent.putExtra("name", ct.name)
             intent.putExtra("id", ct.id)
 
+            //adapter?.addItems(ct)
             context.startActivity(intent) //to chat with the person
             // onClickItem?.invoke(ct) } to get the name pop up
         }
