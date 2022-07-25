@@ -17,6 +17,7 @@
 ## Today's appearance
 
 <p align="center">
-  <img src="pics/homepage.png" width="200" title="hover text">
-  <img src="pics/conv.png" width="200" alt="accessibility text">
+  <img src="pics/homepage.png" width="200" title="home">
+  <img src="pics/conv.png" width="200" title="conv">
+  <img src="pics/messages.png" width="200" title="mess">
 </p>
