@@ -16,5 +16,7 @@
 
 ## Today's appearance
 
-![alt text](https://github.com/jtrauque/ft_hangouts/pics/homepage.png?raw=true)
-![alt text](https://github.com/jtrauque/ft_hangouts/pics/conv.png?raw=true)
+<p align="center">
+  <img src="pics/homepage.png" width="200" title="hover text">
+  <img src="pics/conv.png" width="200" alt="accessibility text">
+</p>
