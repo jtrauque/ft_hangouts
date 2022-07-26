@@ -71,7 +71,7 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
 
             intent.putExtra("name", ct.name)
             intent.putExtra("id", ct.id)
-
+            intent.putExtra("phone", ct.phone)
             //adapter?.addItems(ct)
             context.startActivity(intent) //to chat with the person
             // onClickItem?.invoke(ct) } to get the name pop up

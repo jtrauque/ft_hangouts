@@ -243,6 +243,34 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         return Contact()
     }
 
+    @SuppressLint("Range")
+    fun getID(foundPhone: String) : Int {
+        val selectQuery = "SELECT * FROM $TABLE_NAME"
+        val db = this.readableDatabase
+
+        val cursor: Cursor?
+        try{
+            cursor = db.rawQuery(selectQuery, null)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            db.execSQL(selectQuery)
+            return 0
+        }
+
+        var phone: String
+        var receivedId : Int
+
+        if (cursor.moveToFirst()) {
+            do {
+                receivedId = cursor!!.getInt(cursor.getColumnIndex("id"))
+                phone = cursor.getString(cursor.getColumnIndex("phone"))
+                if (phone == foundPhone) {
+                    return receivedId
+                }
+            } while (cursor?.moveToNext()!!)
+        }
+        return 0
+    }
     //fun updateContact(ct: ContactAdapter.ContactViewHolder) : Int {
     fun updateContact( contact: Contact) : Int {
         val db = this.writableDatabase

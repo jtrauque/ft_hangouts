@@ -1,16 +1,21 @@
 package com.example.ft_hangouts
 
+import android.Manifest
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
+import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.Telephony
 import android.util.Log
-import android.view.MenuItem
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var btnAdd:ImageButton
@@ -44,7 +49,36 @@ class MainActivity : AppCompatActivity() {
             ct = it
         }
         supportActionBar!!.hide()
+
+        val permission = Manifest.permission.RECEIVE_SMS
+        ContextCompat.checkSelfPermission(this, permission)
+
     }
+
+//    override fun onStart() {
+//        super.onStart()
+//        val smsListener : BroadcastReceiver = object : BroadcastReceiver()  {
+//            override fun onReceive(context: Context?, intent: Intent) {
+//
+//                if (Telephony.Sms.Intents.SMS_RECEIVED_ACTION == intent.action) {
+//                    for (smsMessage in Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
+//                        val message = smsMessage.messageBody
+//                        editText.setText()
+//                        Log.e("Received message:", message)
+////                        val num = context?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+////                        val messageObjectRev = Message(message, 0, sqliteHelper.getID(num.toString()))
+////                        messageAdapter?.add(0, sqliteHelper.getID(num.toString()))
+////                        sqliteHelper.newMessage(messageObjectRev)
+//                    }
+//                }
+//            }
+//        }
+//        super.onStart()
+//        SmsListener()
+      //  registerReceiver(SmsListener(),
+      //      IntentFilter("android.provider.Telephony.SMS_RECEIVED")
+      //  )
+
 /*
         var actionBar = supportActionBar
 
