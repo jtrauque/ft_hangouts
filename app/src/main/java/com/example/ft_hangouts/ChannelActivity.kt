@@ -1,6 +1,8 @@
 package com.example.ft_hangouts
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
@@ -28,6 +30,7 @@ class ChannelActivity : AppCompatActivity() {
         convAdapter = ConvAdapter(this, sqliteHelper)
         convRecyclerView.adapter = convAdapter
         convAdapter?.addItems()
+        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#004d4d")))
       //  val intent = Intent(this, ChatActivity::class.java)
        // val name = intent.getStringExtra("name")
      //   val receiverId = intent.getIntExtra("id", 0)

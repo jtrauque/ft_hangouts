@@ -57,6 +57,7 @@ class MessageAdapter(val context: Context, private val data: DataBaseHandler): R
             return ITEM_RECIEVE
         }
     }
+
     override fun getItemCount(): Int {
         return messList.size
     }

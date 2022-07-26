@@ -1,5 +1,7 @@
 package com.example.ft_hangouts
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageView
@@ -33,7 +35,7 @@ class ChatActivity : AppCompatActivity() {
        // senderRoom = receiverId + senderId
        // receiverRoom = senderId + receiverId
         supportActionBar?.title = name //to have the receiver name on top of your screen
-
+        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#004d4d")))
        // convAdapter = ConvAdapter(this, sqliteHelper)
       //  convAdapter.addItems(sqliteHelper.getContact(receiverId))
         messageRecyclerView = findViewById(R.id.messageRecycleView)

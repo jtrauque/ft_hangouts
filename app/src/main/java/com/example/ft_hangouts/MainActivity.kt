@@ -1,6 +1,8 @@
 package com.example.ft_hangouts
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -41,6 +43,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, it.name, Toast.LENGTH_SHORT).show()
             ct = it
         }
+        supportActionBar!!.hide()
     }
 /*
         var actionBar = supportActionBar
