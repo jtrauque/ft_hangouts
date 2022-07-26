@@ -30,6 +30,7 @@ class ChannelActivity : AppCompatActivity() {
         convAdapter = ConvAdapter(this, sqliteHelper)
         convRecyclerView.adapter = convAdapter
         convAdapter?.addItems()
+        supportActionBar?.title = "Home"
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#004d4d")))
       //  val intent = Intent(this, ChatActivity::class.java)
        // val name = intent.getStringExtra("name")

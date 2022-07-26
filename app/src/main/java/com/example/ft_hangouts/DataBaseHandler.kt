@@ -72,7 +72,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
     fun deleteConv(contact: Contact) {
         Log.e("deleteConv", "$contact.id")
         val db = this.writableDatabase
-        db.delete(TABLE_MESS, "id=" + contact.id, null)
+        db.delete(TABLE_MESS, "received=" + contact.id, null)
         db.close()
     }
 

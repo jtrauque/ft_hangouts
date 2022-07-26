@@ -20,7 +20,7 @@
 
         <TextView
             android:id="@+id/btnView"
-            android:layout_width="312dp"
+            android:layout_width="395dp"
             android:layout_height="35dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="13dp"
@@ -33,18 +33,7 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <ImageButton
-            android:id="@+id/btnAddChat"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="5dp"
-            android:background="@null"
-            android:layout_gravity="center_vertical"
-            android:autofillHints="add"
-            android:contentDescription="addChat"
-            android:src="@drawable/add_circle"
-            app:tint="@color/blue"/>
+
 
     </LinearLayout>
     <LinearLayout
