@@ -44,7 +44,6 @@ class ChatActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chat)
 
         sqliteHelper = DataBaseHandler(this)
-     //   listener = smsListener
 
         val senderId: Int = 0 // a lier avec le base de donnee
 
@@ -52,12 +51,10 @@ class ChatActivity : AppCompatActivity() {
         receiverId = intent.getIntExtra("id", 0)
         val phone = intent.getStringExtra("phone")
         Log.e("PHONE CHAT", phone.toString())
-        // senderRoom = receiverId + senderId
-        // receiverRoom = senderId + receiverId
+
         supportActionBar?.title = name //to have the receiver name on top of your screen
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#004d4d")))
-        // convAdapter = ConvAdapter(this, sqliteHelper)
-        //  convAdapter.addItems(sqliteHelper.getContact(receiverId))
+
         messageRecyclerView = findViewById(R.id.messageRecycleView)
         messageRecyclerView.layoutManager = LinearLayoutManager(this)
         messageBox = findViewById(R.id.messageBox)
@@ -94,29 +91,15 @@ class ChatActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-           // val listener = SmsListener()
-        //    val listenerMessage = listener.getMessage(intent)
-          //  val listenerPhone = listener.getPhone(intent)
-//            if (listenerMessage != null) {
-//                val messageListener = Message(
-//                    listenerMessage.toString(),
-//                    sqliteHelper.getID(listenerPhone.toString()),
-//                    0
-//                )
-//                sqliteHelper.newMessage(messageListener)
-//                messageAdapter.add(0, sqliteHelper.getID(listenerPhone.toString()))
-//            }
-//            Log.e("CHAT LISTENER PRINT M: ", listenerMessage.toString())
-//            Log.e("CHAT LISTENER PRINT P: ", listenerPhone.toString())
-            //registerReceiver(SmsListener(), IntentFilter("android.provider.Telephony.SMS_RECEIVED"))
+            registerReceiver(smsListener, IntentFilter("android.provider.Telephony.SMS_RECEIVED"))
         }
     }
 
-//    override fun onStop() {
-//        super.onStop()
-//        unregisterReceiver(SmsListener())
-//    }
-/*
+    override fun onStop() {
+        super.onStop()
+        unregisterReceiver(smsListener)
+    }
+
     private val smsListener : BroadcastReceiver = object : BroadcastReceiver()  {
         @SuppressLint("MissingPermission")
         override fun onReceive(context: Context?, intent: Intent) {
@@ -124,14 +107,16 @@ class ChatActivity : AppCompatActivity() {
             if (Telephony.Sms.Intents.SMS_RECEIVED_ACTION == intent.action) {
                 for (smsMessage in Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
                     val message = smsMessage.messageBody
-                    val num = context?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-                    val messageObjectRev = Message(message, 0, sqliteHelper.getID(num.toString()))
+                    val num = smsMessage.originatingAddress
+                    Log.e("LISTENER M:", message)
+                    Log.e("LISTENER P:", num.toString())
+                    val messageObjectRev = Message(message, sqliteHelper.getID(num.toString()), 0)
                     messageAdapter?.add(0, sqliteHelper.getID(num.toString()))
                     sqliteHelper.newMessage(messageObjectRev)
                 }
             }
         }
-    }*/
+    }
 }
 
 

@@ -50,21 +50,11 @@ class MainActivity : AppCompatActivity() {
         }
         supportActionBar!!.hide()
 
-        val permission = Manifest.permission.RECEIVE_SMS
-        ContextCompat.checkSelfPermission(this, permission)
-        val intentFilter = IntentFilter("android.provider.Telephony.SMS_RECEIVED")
-        registerReceiver(SmsListener(), intentFilter)
     }
-
-//    public override fun onStop() {
-//        super.onStop()
-//        unregisterReceiver(SmsListener())
-//    }
 
    public override fun onResume() {
         super.onResume()
         getContacts()
-        //registerReceiver(SmsListener(), IntentFilter("android.provider.Telephony.SMS_RECEIVED"))
     }
 
     private fun getContacts() {
