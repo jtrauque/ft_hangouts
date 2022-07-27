@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -50,7 +51,7 @@ class ChatActivity : AppCompatActivity() {
         val name = intent.getStringExtra("name")
         receiverId = intent.getIntExtra("id", 0)
         val phone = intent.getStringExtra("phone")
-
+        Log.e("PHONE CHAT", phone.toString())
         // senderRoom = receiverId + senderId
         // receiverRoom = senderId + receiverId
         supportActionBar?.title = name //to have the receiver name on top of your screen
@@ -70,12 +71,12 @@ class ChatActivity : AppCompatActivity() {
         sendButton.setOnClickListener {
             message = messageBox.text.toString()
             val messageObject = Message(message, senderId, receiverId)
-       //     val messageObjectReverse = Message(message, receiverId, senderId)
+            //     val messageObjectReverse = Message(message, receiverId, senderId)
 
             sqliteHelper.newMessage(messageObject)
             messageAdapter.add(receiverId, senderId)
-          //  sqliteHelper.newMessage(messageObjectReverse)
-         //   messageAdapter.add(senderId, receiverId)
+            //  sqliteHelper.newMessage(messageObjectReverse)
+            //   messageAdapter.add(senderId, receiverId)
             messageBox.setText("")
 
             try {
@@ -93,31 +94,28 @@ class ChatActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             }
+           // val listener = SmsListener()
+        //    val listenerMessage = listener.getMessage(intent)
+          //  val listenerPhone = listener.getPhone(intent)
+//            if (listenerMessage != null) {
+//                val messageListener = Message(
+//                    listenerMessage.toString(),
+//                    sqliteHelper.getID(listenerPhone.toString()),
+//                    0
+//                )
+//                sqliteHelper.newMessage(messageListener)
+//                messageAdapter.add(0, sqliteHelper.getID(listenerPhone.toString()))
+//            }
+//            Log.e("CHAT LISTENER PRINT M: ", listenerMessage.toString())
+//            Log.e("CHAT LISTENER PRINT P: ", listenerPhone.toString())
+            //registerReceiver(SmsListener(), IntentFilter("android.provider.Telephony.SMS_RECEIVED"))
         }
     }
-    override fun onStart() {
-        super.onStart()
-        val smsListener : BroadcastReceiver = object : BroadcastReceiver()  {
-            override fun onReceive(context: Context?, intent: Intent) {
 
-                if (Telephony.Sms.Intents.SMS_RECEIVED_ACTION == intent.action) {
-                    for (smsMessage in Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
-                        message = smsMessage.messageBody
-                        Log.e("Received message:", message)
-                        val num = context?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-                        val messageObjectRev = Message(message, 0, sqliteHelper.getID(num.toString()))
-                        messageAdapter?.add(0, sqliteHelper.getID(num.toString()))
-                        sqliteHelper.newMessage(messageObjectRev)
-                    }
-                }
-            }
-        }
-//        super.onStart()
-//        SmsListener()
-        //  registerReceiver(SmsListener(),
-        //      IntentFilter("android.provider.Telephony.SMS_RECEIVED")
-        //  )
-    }
+//    override fun onStop() {
+//        super.onStop()
+//        unregisterReceiver(SmsListener())
+//    }
 /*
     private val smsListener : BroadcastReceiver = object : BroadcastReceiver()  {
         @SuppressLint("MissingPermission")
@@ -137,10 +135,6 @@ class ChatActivity : AppCompatActivity() {
 }
 
 
-   // public override fun onResume() {
-   //     super.onResume()
-   //     sqliteHelper.getMessages(receiverId, 0)
-  //  }
 
 
 
