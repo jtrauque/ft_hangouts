@@ -72,7 +72,6 @@ class MessageAdapter(val context: Context, private val data: DataBaseHandler): R
 
     inner class SentViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val sentMessage = itemView.findViewById<TextView>(R.id.sentMessage)
-
     }
 
     inner class ReceiveViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

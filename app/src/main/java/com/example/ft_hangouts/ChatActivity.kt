@@ -42,6 +42,7 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
+       // registerReceiver(smsListener, IntentFilter("android.provider.Telephony.SMS_RECEIVED"))
 
         sqliteHelper = DataBaseHandler(this)
 
@@ -91,17 +92,22 @@ class ChatActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-            registerReceiver(smsListener, IntentFilter("android.provider.Telephony.SMS_RECEIVED"))
         }
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onStart() {
+        super.onStart()
+        Log.e("On START", "0")
+        registerReceiver(smsListener, IntentFilter("android.provider.Telephony.SMS_RECEIVED"))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e("On DESTROY", "0")
         unregisterReceiver(smsListener)
     }
 
     private val smsListener : BroadcastReceiver = object : BroadcastReceiver()  {
-        @SuppressLint("MissingPermission")
         override fun onReceive(context: Context?, intent: Intent) {
 
             if (Telephony.Sms.Intents.SMS_RECEIVED_ACTION == intent.action) {
