@@ -85,6 +85,8 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         cv.put(COL_MESSAGEID, message.messageId)
         cv.put(COL_DATE, message.date)
 
+        Log.e("NEW MESSAGE RECEIVED:", message.message)
+        Log.e("RECEIVED FROM:", message.senderId.toString())
         var result = db.insert(TABLE_MESS, null, cv)
         if (result == (-1).toLong())
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
@@ -172,7 +174,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
     }
 
     @SuppressLint("Range")
-    fun getMessages(recId: Int, sendId: Int) : ArrayList<Message> {
+    fun getMessages(recId: Int) : ArrayList<Message> {
         val messList: ArrayList<Message> = ArrayList()
         val selectQuery = "SELECT * FROM $TABLE_MESS"
         val db = this.readableDatabase
@@ -200,10 +202,15 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
                 messageId = cursor.getInt(cursor.getColumnIndex("messageId"))
                 date = cursor.getString(cursor.getColumnIndex("date"))
 
-                Log.e("getmess =", receivedId.toString())
-                if (receivedId == recId && senderId == 0 || (receivedId == sendId && senderId == recId)) {
+                Log.e("GETMESS PARAM R =", recId.toString())
+              //  Log.e("GETMESS PARAM S =", sendId.toString())
+                if (receivedId == recId || senderId == recId) {
                     val ct = Message(message, senderId, receivedId, messageId, date)
-                    Log.e("getmess IIIIDDDD mess=", messageId.toString())
+                    Log.e("GETMESS ID =", messageId.toString())
+                    Log.e("GETMESS MESS =", message)
+                    Log.e("GETMESS SEND =", senderId.toString())
+                    Log.e("GETMESS REC =", receivedId.toString())
+                    Log.e("GETMESS DATE =", date)
                     messList.add(ct)
                 }
             } while (cursor.moveToNext())
@@ -264,7 +271,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
             do {
                 receivedId = cursor!!.getInt(cursor.getColumnIndex("id"))
                 phone = cursor.getString(cursor.getColumnIndex("phone"))
-                if (phone == foundPhone) {
+                if ("+1$phone" == foundPhone) {
                     return receivedId
                 }
             } while (cursor?.moveToNext()!!)
