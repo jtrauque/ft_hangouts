@@ -1,6 +1,8 @@
 package com.example.ft_hangouts
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -29,6 +31,10 @@ class Modify : AppCompatActivity() {
         usedName = intent.getStringExtra("name").toString()
         usedPhone = intent.getStringExtra("phone").toString()
         usedID = intent.getIntExtra("id", 0)
+
+        supportActionBar?.title = "$usedName - $usedPhone" //to have the receiver name on top of your screen
+        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#004d4d")))
+
         sqliteHelper = DataBaseHandler(this)
         btnSave.setOnClickListener(){
             modifyContact()

@@ -1,6 +1,8 @@
 package com.example.ft_hangouts
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +21,9 @@ class Save : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save)
+
+        supportActionBar?.title = "Contact creation" //to have the receiver name on top of your screen
+        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#004d4d")))
 
         initView()
         sqliteHelper = DataBaseHandler(this)
