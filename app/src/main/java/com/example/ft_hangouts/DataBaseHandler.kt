@@ -202,15 +202,14 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
                 messageId = cursor.getInt(cursor.getColumnIndex("messageId"))
                 date = cursor.getString(cursor.getColumnIndex("date"))
 
-                Log.e("GETMESS PARAM R =", recId.toString())
-              //  Log.e("GETMESS PARAM S =", sendId.toString())
+               // Log.e("GETMESS PARAM R =", recId.toString())
                 if (receivedId == recId || senderId == recId) {
                     val ct = Message(message, senderId, receivedId, messageId, date)
-                    Log.e("GETMESS ID =", messageId.toString())
-                    Log.e("GETMESS MESS =", message)
-                    Log.e("GETMESS SEND =", senderId.toString())
-                    Log.e("GETMESS REC =", receivedId.toString())
-                    Log.e("GETMESS DATE =", date)
+//                    Log.e("GETMESS ID =", messageId.toString())
+//                    Log.e("GETMESS MESS =", message)
+//                    Log.e("GETMESS SEND =", senderId.toString())
+//                    Log.e("GETMESS REC =", receivedId.toString())
+//                    Log.e("GETMESS DATE =", date)
                     messList.add(ct)
                 }
             } while (cursor.moveToNext())
@@ -261,6 +260,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         } catch (e: Exception) {
             e.printStackTrace()
             db.execSQL(selectQuery)
+            Log.e("GET ID=", "ERROR")
             return 0
         }
 
@@ -271,7 +271,10 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
             do {
                 receivedId = cursor!!.getInt(cursor.getColumnIndex("id"))
                 phone = cursor.getString(cursor.getColumnIndex("phone"))
+                Log.e("GET ID FIND =", foundPhone)
+                Log.e("GET ID LOOP =", phone)
                 if ("+1$phone" == foundPhone) {
+                    Log.e("GET ID RETURN =", receivedId.toString())
                     return receivedId
                 }
             } while (cursor?.moveToNext()!!)

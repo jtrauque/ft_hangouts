@@ -75,11 +75,24 @@
         android:background="@color/gray"
         android:elevation="10dp">
         <ImageButton
+            android:id="@+id/btnSet"
+            android:layout_width="53dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="50dp"
+            android:background="@null"
+            android:autofillHints="settings"
+            android:contentDescription="settings"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/settings"
+            app:tint="@color/blue" />
+
+        <ImageButton
             android:id="@+id/btnSms"
             android:layout_width="53dp"
             android:layout_height="50dp"
             android:layout_marginTop="0dp"
-            android:layout_marginStart="310dp"
+            android:layout_marginStart="200dp"
             android:layout_gravity="center_vertical"
             android:background="@null"
             android:autofillHints="sms"

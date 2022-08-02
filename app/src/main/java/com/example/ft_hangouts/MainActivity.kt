@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 class MainActivity : AppCompatActivity() {
     private lateinit var btnAdd:ImageButton
     private lateinit var btnSms:ImageButton
+    private lateinit var btnSet:ImageButton
 
     private lateinit var sqliteHelper: DataBaseHandler
     private lateinit var recyclerView: RecyclerView
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         sqliteHelper = DataBaseHandler(this)
-      //sqliteHelper.deleteTable()
+        //sqliteHelper.deleteTable()
 
         initView()
         initRecycleView()
@@ -41,6 +42,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         btnSms.setOnClickListener(){
+            val intent = Intent(this, ChannelActivity::class.java)
+            startActivity(intent)
+        }
+        btnSet.setOnClickListener(){
             val intent = Intent(this, ChannelActivity::class.java)
             startActivity(intent)
         }
@@ -94,6 +99,7 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         btnAdd = findViewById<ImageButton>(R.id.btnAdd)
         btnSms = findViewById<ImageButton>(R.id.btnSms)
+        btnSet = findViewById<ImageButton>(R.id.btnSet)
         recyclerView = findViewById((R.id.recycleView))
     }
 }

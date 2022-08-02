@@ -71,6 +71,7 @@
                 android:value=".ChannelActivity"
                 />
         </activity>
+
     </application>
 
 </manifest>
