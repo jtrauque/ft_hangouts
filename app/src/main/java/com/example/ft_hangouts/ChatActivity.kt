@@ -12,6 +12,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Telephony
 import android.telephony.SmsManager
+import android.text.Html
 import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
@@ -38,6 +39,7 @@ class ChatActivity : AppCompatActivity() {
     private var receiverId: Int = 0
     private lateinit var message: String
 
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,11 +54,11 @@ class ChatActivity : AppCompatActivity() {
         val phone = intent.getStringExtra("phone").toString()
         Log.e(TAG, "onCreate chat for this external number : $phone")
 
-
         getPermission(Manifest.permission.RECEIVE_SMS)
 
-        supportActionBar?.title = name //to have the receiver name on top of your screen
-        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#004d4d")))
+        var colorText: String = ColorManager.text
+        supportActionBar?.title = Html.fromHtml("<font color=$colorText>$name +1$phone")
+        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor(ColorManager.back)))
 
         messageRecyclerView = findViewById(R.id.messageRecycleView)
         messageRecyclerView.layoutManager = LinearLayoutManager(this)

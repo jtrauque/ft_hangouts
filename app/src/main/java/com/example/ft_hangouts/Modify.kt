@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -22,6 +23,7 @@ class Modify : AppCompatActivity() {
     private lateinit var newName : EditText
     private lateinit var newPhone : EditText
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_modify)
@@ -32,8 +34,9 @@ class Modify : AppCompatActivity() {
         usedPhone = intent.getStringExtra("phone").toString()
         usedID = intent.getIntExtra("id", 0)
 
-        supportActionBar?.title = "$usedName - $usedPhone" //to have the receiver name on top of your screen
-        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#004d4d")))
+        var colorText: String = ColorManager.text
+        supportActionBar?.title = Html.fromHtml("<font color=$colorText>$usedName - $usedPhone")
+        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor(ColorManager.back)))
 
         sqliteHelper = DataBaseHandler(this)
         btnSave.setOnClickListener(){

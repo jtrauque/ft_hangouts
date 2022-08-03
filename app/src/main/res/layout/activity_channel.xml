@@ -20,11 +20,11 @@
 
         <TextView
             android:id="@+id/btnView"
-            android:layout_width="395dp"
+            android:layout_width="350dp"
             android:layout_height="35dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="13dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/btn_shape"
             android:elevation="10dp"
             android:gravity="center"

@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         btnSet.setOnClickListener(){
-            val intent = Intent(this, ChannelActivity::class.java)
+            val intent = Intent(this, PopUpColor::class.java)
             startActivity(intent)
         }
         adapter?.setOnClickItem {

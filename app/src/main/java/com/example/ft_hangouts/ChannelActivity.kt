@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
@@ -30,16 +31,10 @@ class ChannelActivity : AppCompatActivity() {
         convAdapter = ConvAdapter(this, sqliteHelper)
         convRecyclerView.adapter = convAdapter
         convAdapter?.addItems()
-        supportActionBar?.title = "Home"
-        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor("#004d4d")))
-      //  val intent = Intent(this, ChatActivity::class.java)
-       // val name = intent.getStringExtra("name")
-     //   val receiverId = intent.getIntExtra("id", 0)
-      //  intent.putExtra("name", name)
-      //  intent.putExtra("id", receiverId)
 
-     //   convAdapter?.addItems(sqliteHelper.getContact(receiverId))
-     //   startActivity(intent)
+        var colorText: String = ColorManager.text
+        supportActionBar?.title = Html.fromHtml("<font color=$colorText>Home")
+        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor(ColorManager.back)))
     }
 
     public override fun onResume() {

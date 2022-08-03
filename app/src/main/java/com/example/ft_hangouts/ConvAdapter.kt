@@ -26,11 +26,8 @@ class ConvAdapter(val context: Context, private val data: DataBaseHandler): Recy
 
             btnDelete.setOnClickListener {
                 Log.e("plop", position.toString())
-              //  var plop = convList[position]
                 deleteItem(position)
             }
-            //addItems(this.ct[position])
-
         }
     }
     fun setOnClickItem(callback: (Contact)->Unit) {
@@ -51,7 +48,7 @@ class ConvAdapter(val context: Context, private val data: DataBaseHandler): Recy
 
             intent.putExtra("name", ct.name)
             intent.putExtra("id", ct.id)
-
+            intent.putExtra("phone", ct.phone)
             context.startActivity(intent) //to chat with the person
             // onClickItem?.invoke(ct) } to get the name pop up
         }
@@ -64,7 +61,6 @@ class ConvAdapter(val context: Context, private val data: DataBaseHandler): Recy
     fun addItems() {
         convList = data.getAllConv()
         Log.e("ADD CONV ON BIND", convList.toString())
-      //  this.convList = data.getAllConv() as ArrayList<Contact> //ctList
         notifyDataSetChanged()
     }
 

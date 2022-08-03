@@ -72,6 +72,10 @@
                 />
         </activity>
 
+        <activity
+            android:name=".PopUpColor"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>
