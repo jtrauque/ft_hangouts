@@ -77,12 +77,14 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
     }
 
     fun newMessage(message: Message) {
+
         val db = this.writableDatabase
         var cv = ContentValues()
         cv.put(COL_SENDID, message.senderId)
         cv.put(COL_RECID, message.receiverId)
         cv.put(COL_MESSAGE, message.message)
-        cv.put(COL_MESSAGEID, message.messageId)
+        if (!isMessIdExisting(message.messageId))
+            cv.put(COL_MESSAGEID, message.messageId)
         cv.put(COL_DATE, message.date)
 
         Log.e("NEW MESSAGE RECEIVED:", message.message)
@@ -93,6 +95,34 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         else
             Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
         db.close()
+    }
+
+    @SuppressLint("Range")
+    fun isMessIdExisting(id: Int) : Boolean {
+        val ctList: ArrayList<Contact> = ArrayList()
+        val selectQuery = "SELECT * FROM $TABLE_MESS"
+        val db = this.readableDatabase
+
+        val cursor: Cursor?
+
+        try{
+            cursor = db.rawQuery(selectQuery, null)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            db.execSQL(selectQuery)
+            return false
+        }
+
+        var messId : Int
+
+        if (cursor.moveToFirst()){
+            do {
+                messId = cursor.getInt(cursor.getColumnIndex("messageId"))
+                if (messId == id)
+                    return true
+            } while (cursor.moveToNext())
+        }
+        return false
     }
 
     fun insertContact(contact: Contact) : Long {

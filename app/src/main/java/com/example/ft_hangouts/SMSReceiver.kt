@@ -30,7 +30,6 @@ class SMSReceiver : BroadcastReceiver() {
                 0
             )
             sqliteHelper.newMessage(newMessage)
-
         }
     }
 }
