@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.ColorUtils
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PopUpColor: AppCompatActivity() {
     private lateinit var boxLight: CheckBox
@@ -26,7 +28,7 @@ class PopUpColor: AppCompatActivity() {
     private lateinit var popup_window_view_with_border:CardView
     private lateinit var popup_window_view:CardView
     private lateinit var popup_window_background:ConstraintLayout
-
+    private var time:String = "null"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,6 +88,17 @@ class PopUpColor: AppCompatActivity() {
         ).start()
     }
 
+    override fun onPause() {
+        super.onPause()
+        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+        time = sdf.format(Date())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (time != "null")
+            Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
+    }
     private fun setWindowFlag(activity: Activity, on: Boolean) {
         val win = activity.window
         val winParams = win.attributes

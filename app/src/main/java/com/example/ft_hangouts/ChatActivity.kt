@@ -24,6 +24,9 @@ import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ChatActivity : AppCompatActivity() {
@@ -38,7 +41,7 @@ class ChatActivity : AppCompatActivity() {
 
     private var receiverId: Int = 0
     private lateinit var message: String
-
+    private var time:String = "null"
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -106,11 +109,15 @@ class ChatActivity : AppCompatActivity() {
         super.onResume()
         registerReceiver(broadCastReceiver, IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION))
         messageAdapter.add(receiverId)
+        if (time != "null")
+            Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
         Log.e(TAG, "onResume")
     }
 
     override fun onPause() {
         super.onPause()
+        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+        time = sdf.format(Date())
         Log.e(TAG, "onPause")
     }
 

@@ -15,6 +15,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private var adapter: ContactAdapter? = null
     private var ct:Contact? = null
+    private var time:String = "null"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,8 +63,15 @@ class MainActivity : AppCompatActivity() {
    public override fun onResume() {
         super.onResume()
         getContacts()
+        if (time != "null")
+            Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
     }
 
+    public override fun onPause() {
+        super.onPause()
+        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+        time = sdf.format(Date())
+    }
     private fun getContacts() {
         //get all contacts
         val ctList = sqliteHelper.getAllContact()

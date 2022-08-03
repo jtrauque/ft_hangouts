@@ -12,6 +12,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChannelActivity : AppCompatActivity() {
 
@@ -19,6 +22,7 @@ class ChannelActivity : AppCompatActivity() {
     lateinit var sqliteHelper: DataBaseHandler
     private var convAdapter: ConvAdapter? = null
     private lateinit var ct: ArrayList<Contact>
+    private var time:String = "null"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +44,15 @@ class ChannelActivity : AppCompatActivity() {
     public override fun onResume() {
         super.onResume()
         getConv()
+        if (time != "null")
+            Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
     }
 
+    override fun onPause() {
+        super.onPause()
+        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+        time = sdf.format(Date())
+    }
     private fun getConv() {
         ct = sqliteHelper.getAllConv()
     }
