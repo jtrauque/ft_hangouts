@@ -40,8 +40,11 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var sqliteHelper: DataBaseHandler
 
     private var receiverId: Int = 0
+    private var senderId: Int = 0
     private lateinit var message: String
     private var time:String = "null"
+    private var name = ""
+    private var phone = ""
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,28 +54,17 @@ class ChatActivity : AppCompatActivity() {
 
         sqliteHelper = DataBaseHandler(this)
 
-        val senderId: Int = 0 // a lier avec le base de donnee
-        val name = intent.getStringExtra("name").toString()
+        name = intent.getStringExtra("name").toString()
         receiverId = intent.getIntExtra("id", 0)
-        val phone = intent.getStringExtra("phone").toString()
+        phone = intent.getStringExtra("phone").toString()
         Log.e(TAG, "onCreate chat for this external number : $phone")
 
         getPermission(Manifest.permission.RECEIVE_SMS)
 
-        var colorText: String = ColorManager.text
-        supportActionBar?.title = Html.fromHtml("<font color=$colorText>$name +1$phone")
-        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor(ColorManager.back)))
+        activityColor()
+        initView()
 
-        messageRecyclerView = findViewById(R.id.messageRecycleView)
-        messageRecyclerView.layoutManager = LinearLayoutManager(this)
-        messageBox = findViewById(R.id.messageBox)
-        sendButton = findViewById(R.id.sendBtn)
-        messageList = ArrayList()
-        messageAdapter = MessageAdapter(this, sqliteHelper)
-        messageRecyclerView.adapter = messageAdapter
         messageAdapter?.add(receiverId)
-
-        //add data to recycleView
 
         sendButton.setOnClickListener {
             message = messageBox.text.toString()
@@ -98,6 +90,23 @@ class ChatActivity : AppCompatActivity() {
                 ).show()
             }
         }
+    }
+
+    private fun activityColor() {
+        var colorText: String = ColorManager.text
+        supportActionBar?.title = Html.fromHtml("<font color=$colorText>$name +1$phone")
+        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor(ColorManager.back)))
+    }
+
+    private fun initView() {
+        messageRecyclerView = findViewById(R.id.messageRecycleView)
+        messageRecyclerView.layoutManager = LinearLayoutManager(this)
+        messageAdapter = MessageAdapter(this, sqliteHelper)
+        messageRecyclerView.adapter = messageAdapter
+        //add data to recycleView
+
+        messageBox = findViewById(R.id.messageBox)
+        sendButton = findViewById(R.id.sendBtn)
     }
 
     override fun onStart() {

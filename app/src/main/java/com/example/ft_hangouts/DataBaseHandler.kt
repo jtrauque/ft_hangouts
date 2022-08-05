@@ -23,7 +23,11 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
       private const val TABLE_NAME = "Users"
       private const val COL_NAME = "name"
       private const val COL_PHONE = "phone"
+      private const val COL_ADDRESS = "address"
+      private const val COL_MAIL = "mail"
+      private const val COL_BIRTH = "birthday"
       private const val COL_ID = "id"
+
       private const val TABLE_MESS = "Messages"
       private const val COL_SENDID = "send"
       private const val COL_RECID = "received"
@@ -36,7 +40,10 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         val createTable = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
                 COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_NAME + " VARCHAR(256), " +
-                COL_PHONE + " VARCHAR(256));"
+                COL_PHONE + " VARCHAR(256), " +
+                COL_ADDRESS + " VARCHAR(256), " +
+                COL_MAIL + " VARCHAR(256), " +
+                COL_BIRTH + " VARCHAR(256));"
 
         val createMess = "CREATE TABLE IF NOT EXISTS " + TABLE_MESS + " (" +
                 COL_SENDID + " INTEGER, " +
@@ -131,6 +138,9 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         var cv = ContentValues()
         cv.put(COL_NAME, contact.name)
         cv.put(COL_PHONE, contact.phone)
+        cv.put(COL_ADDRESS, contact.address)
+        cv.put(COL_MAIL, contact.mail)
+        cv.put(COL_BIRTH, contact.birth)
         var result = db.insert(TABLE_NAME, null, cv)
         if (result == (-1).toLong())
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
@@ -159,14 +169,20 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         var id : Int
         var name: String
         var phone: String
+        var address: String
+        var mail: String
+        var birth: String
 
         if (cursor.moveToFirst()){
             do {
                 id = cursor.getInt(cursor.getColumnIndex("id"))
                 name = cursor.getString(cursor.getColumnIndex("name"))
                 phone = cursor.getString(cursor.getColumnIndex("phone"))
+                address = cursor.getString(cursor.getColumnIndex("address"))
+                mail = cursor.getString(cursor.getColumnIndex("mail"))
+                birth = cursor.getString(cursor.getColumnIndex("birthday"))
 
-                val ct = Contact(id = id, name = name, phone = phone)
+                val ct = Contact(id = id, name = name, phone = phone, address = address, mail = mail, birth = birth)
                 ctList.add(ct)
             } while (cursor.moveToNext())
         }
@@ -195,7 +211,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
                 receivedId = cursor.getInt(cursor.getColumnIndex("received"))
                 val ct = getContact(receivedId)
                 val find = ctList.contains(ct)
-                if (!find && receivedId != 0) {
+                if (!find && receivedId != 0 && ct.name != "") {
                     Log.e("getallconv name=", ct.name)
                     ctList.add(ct)
                 }
@@ -266,14 +282,20 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         var name: String
         var phone: String
         var receivedId : Int
+        var address: String
+        var mail: String
+        var birth: String
 
         if (cursor.moveToFirst()) {
             do {
                 receivedId = cursor!!.getInt(cursor.getColumnIndex("id"))
                 name = cursor.getString(cursor.getColumnIndex("name"))
                 phone = cursor.getString(cursor.getColumnIndex("phone"))
+                address = cursor.getString(cursor.getColumnIndex("address"))
+                mail = cursor.getString(cursor.getColumnIndex("mail"))
+                birth = cursor.getString(cursor.getColumnIndex("birthday"))
                 if (receivedId == id) {
-                    return Contact(id = receivedId, name = name, phone = phone)
+                    return Contact(id = receivedId, name = name, phone = phone, address = address, mail = mail, birth = birth)
                 }
             } while (cursor?.moveToNext()!!)
         }
@@ -321,6 +343,9 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
         cv.put(COL_ID, contact.id)
         cv.put(COL_NAME, contact.name)
         cv.put(COL_PHONE, contact.phone)
+        cv.put(COL_ADDRESS, contact.address)
+        cv.put(COL_MAIL, contact.mail)
+        cv.put(COL_BIRTH, contact.birth)
 
         val success = db.update(TABLE_NAME, cv, "id=" + contact.id.toString(), null)
         db.close()

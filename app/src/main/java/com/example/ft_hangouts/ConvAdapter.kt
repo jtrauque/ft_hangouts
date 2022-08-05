@@ -2,11 +2,13 @@ package com.example.ft_hangouts
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -17,19 +19,20 @@ class ConvAdapter(val context: Context, private val data: DataBaseHandler): Recy
 
     inner class ConvViewHolder(private var view: View) : RecyclerView.ViewHolder(view) {
         private var name = view.findViewById<TextView>(R.id.messName)
-        private var ct = data.getAllConv()
+        private var btnDelete = view.findViewById<ImageButton>(R.id.btnDeleteConv)
 
         fun binView(ct: Contact, position: Int) {
-            val btnDelete = view.findViewById<Button>(R.id.btnDeleteConv)
             Log.e("name = ", ct.name)
             name.text = ct.name
 
+            btnDelete.setColorFilter(Color.parseColor(ColorManager.back))
             btnDelete.setOnClickListener {
                 Log.e("plop", position.toString())
                 deleteItem(position)
             }
         }
     }
+
     fun setOnClickItem(callback: (Contact)->Unit) {
         this.onClickItem = callback
     }
@@ -40,7 +43,10 @@ class ConvAdapter(val context: Context, private val data: DataBaseHandler): Recy
     }
 
     override fun onBindViewHolder(holder: ConvAdapter.ConvViewHolder, position: Int) {
+        Log.e("CONVADAPT LIST:", convList[0].name)
+        Log.e("CONVADAPT LIST s:", itemCount.toString())
         val ct = convList[position]
+
         holder.binView(ct, position)
         Log.e("plop ON BIND", position.toString())
         holder.itemView.setOnClickListener {

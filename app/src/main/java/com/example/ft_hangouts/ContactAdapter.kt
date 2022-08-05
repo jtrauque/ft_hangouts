@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.view.menu.MenuView
 
@@ -22,11 +23,11 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
         private var name = view.findViewById<TextView>(R.id.tvName)
         private var phone = view.findViewById<TextView>(R.id.tvPhone)
 
-        private var ct = data.getAllContact()
+   //     private var ct = data.getAllContact()
 
         fun binView(ct : Contact, position : Int) {
-            val btnDelete = view.findViewById<Button>(R.id.btnDelete)
-            val btnModify = view.findViewById<Button>(R.id.btnModify)
+            val btnDelete = view.findViewById<ImageButton>(R.id.btnDelete)
+            val btnSms = view.findViewById<ImageButton>(R.id.btnSms)
             name.text = ct.name
             phone.text = ct.phone
 
@@ -35,12 +36,14 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
                 deleteItem(position)
             }
 
-            btnModify.setOnClickListener {
-                val intent = Intent(context, Modify::class.java)
+            btnSms.setOnClickListener {
+                val intent = Intent(context, ChatActivity::class.java)
+
                 intent.putExtra("name", ct.name)
-                intent.putExtra("phone", ct.phone)
                 intent.putExtra("id", ct.id)
-                context.startActivity(intent)
+                intent.putExtra("phone", ct.phone)
+                //adapter?.addItems(ct)
+                context.startActivity(intent) //to chat with the person
             }
         }
     }
@@ -67,7 +70,7 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
 
         holder.binView(ct, position)
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, ChatActivity::class.java)
+            val intent = Intent(context, ContactInfo::class.java)
 
             intent.putExtra("name", ct.name)
             intent.putExtra("id", ct.id)

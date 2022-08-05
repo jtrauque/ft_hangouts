@@ -43,12 +43,13 @@ class PopUpColor: AppCompatActivity() {
                 result = "You cannot have both - no changes"
             } else if (boxLight.isChecked) {
                 result = "Light it is"
-                ColorManager.back = "#d9d9d9"
+              //  ColorManager.back = "#d9d9d9"
+                ColorManager.back = "#f9efd2"
                 ColorManager.text = "#004d4d"
             } else if (boxDark.isChecked) {
                 result = "Dark it is"
                 ColorManager.back = "#004d4d"
-                ColorManager.text = "#d9d9d9"
+                ColorManager.text = "#f9efd2"
             } else {
                 result = "No changes"
             }
@@ -74,14 +75,6 @@ class PopUpColor: AppCompatActivity() {
                 setWindowFlag(this, false)
             }
         }
-//        val alpha = 100 //between 0-255
-//        val alphaColor = ColorUtils.setAlphaComponent(Color.parseColor("#000000"), alpha)
-//        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), Color.TRANSPARENT, alphaColor)
-//        colorAnimation.duration = 500 // milliseconds
-//        colorAnimation.addUpdateListener { animator ->
-//            popup_window_background.setBackgroundColor(animator.animatedValue as Int)
-//        }
-       // colorAnimation.start()
         popup_window_view_with_border.alpha = 0f
         popup_window_view_with_border.animate().alpha(1f).setDuration(500).setInterpolator(
             DecelerateInterpolator()
@@ -90,6 +83,10 @@ class PopUpColor: AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
         time = sdf.format(Date())
     }
@@ -99,6 +96,7 @@ class PopUpColor: AppCompatActivity() {
         if (time != "null")
             Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
     }
+
     private fun setWindowFlag(activity: Activity, on: Boolean) {
         val win = activity.window
         val winParams = win.attributes
@@ -108,7 +106,8 @@ class PopUpColor: AppCompatActivity() {
             winParams.flags = winParams.flags and WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS.inv()
         }
         win.attributes = winParams
-        }
+    }
+
     private fun initView() {
         boxLight = findViewById<CheckBox>(R.id.light)
         boxDark = findViewById<CheckBox>(R.id.dark)
@@ -122,6 +121,6 @@ class PopUpColor: AppCompatActivity() {
 abstract class ColorManager(){
     companion object {
         var back: String = "#004d4d"
-        var text: String = "#d9d9d9"
+        var text: String = "#f9efd2"
     }
 }

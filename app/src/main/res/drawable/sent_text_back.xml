@@ -4,5 +4,5 @@
     <solid android:color="@color/blue"/>
     <padding android:bottom="@dimen/cardview_compat_inset_shadow" />
     <corners android:radius="30dp"/>
-    <stroke android:color="@color/gray" android:width="2dp"/>
+    <stroke android:color="#f9efd2" android:width="2dp"/>
 </shape>

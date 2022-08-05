@@ -47,6 +47,7 @@
                 android:value=".MainActivity"
             />
         </activity>
+
         <activity
             android:name=".Modify"
             android:exported="false">
@@ -55,6 +56,7 @@
                 android:value=".MainActivity"
                 />
         </activity>
+
         <activity
             android:name=".ChannelActivity"
             android:exported="false">
@@ -63,6 +65,7 @@
                 android:value=".MainActivity"
                 />
         </activity>
+
         <activity
             android:name=".ChatActivity"
             android:exported="false">
@@ -76,6 +79,13 @@
             android:name=".PopUpColor"
             android:exported="false">
         </activity>
-    </application>
 
+        <activity android:name=".ContactInfo"
+            android:exported="false">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MainActivity"/>
+        </activity>
+
+    </application>
 </manifest>
