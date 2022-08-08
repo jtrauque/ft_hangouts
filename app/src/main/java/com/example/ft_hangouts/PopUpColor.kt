@@ -6,6 +6,7 @@ import android.app.Activity
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
@@ -17,6 +18,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.ColorUtils
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,7 +33,6 @@ class PopUpColor: AppCompatActivity() {
     private lateinit var popup_window_view_with_border:CardView
     private lateinit var popup_window_view:CardView
     private lateinit var popup_window_background:ConstraintLayout
-    private var time:String = "null"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,22 +83,22 @@ class PopUpColor: AppCompatActivity() {
         popup_window_view_with_border.animate().alpha(1f).setDuration(500).setInterpolator(
             DecelerateInterpolator()
         ).start()
+
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStart() {
+        super.onStart()
+        if (BackgroundCheck.time != "null" && BackgroundCheck.backOn) {
+            var time = BackgroundCheck.time
+            Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
+            BackgroundCheck.backOn = false
+        }
     }
 
     override fun onStop() {
         super.onStop()
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-        time = sdf.format(Date())
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (time != "null")
-            Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
+        BackgroundCheck.time = sdf.format(Date())
     }
 
     private fun setWindowFlag(activity: Activity, on: Boolean) {

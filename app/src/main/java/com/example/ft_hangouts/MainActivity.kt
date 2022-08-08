@@ -3,13 +3,15 @@ package com.example.ft_hangouts
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-
 import android.text.Html
 import android.util.Log
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), LifecycleObserver {
     private lateinit var btnAdd:ImageButton
     private lateinit var btnSms:ImageButton
     private lateinit var btnSet:ImageButton
@@ -29,8 +31,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private var adapter: ContactAdapter? = null
     private var ct:Contact? = null
-    private var time:String = "null"
-    private var wasInBackground: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +41,6 @@ class MainActivity : AppCompatActivity() {
 
         initView()
         initRecycleView()
-
-        ProcessLifecycleOwner.get()
 
         btnAdd.setOnClickListener(){
             val intent = Intent(this, Save::class.java)
@@ -63,6 +61,7 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar!!.hide()
         activityColor()
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
 
     private fun activityColor() {
@@ -78,16 +77,18 @@ class MainActivity : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         Log.e("MAIN", "On START")
-        if (time != "null" && wasInBackground) {
+        if (BackgroundCheck.time != "null" && BackgroundCheck.backOn) {
+            var time = BackgroundCheck.time
             Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
-            wasInBackground = false
+            BackgroundCheck.backOn = false
+            BackgroundCheck.time = "null"
         }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onAppBackgrounded() {
         Log.e("MAIN", "BACKGROOOOOUND")
-        wasInBackground = true
+        BackgroundCheck.backOn = true
         //App in background
     }
 
@@ -110,9 +111,9 @@ class MainActivity : AppCompatActivity() {
 
     public override fun onStop() {
         super.onStop()
-        Log.e("MAIN", "On STOP")
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-        time = sdf.format(Date())
+        BackgroundCheck.time = sdf.format(Date())
+        Log.e("MAIN", "On STOP")
     }
 
     private fun getContacts() {
@@ -159,12 +160,9 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-//val Context.orientation:String
-//    get() {
-//        return when(resources.configuration.orientation){
-//            Configuration.ORIENTATION_PORTRAIT -> "Portrait"
-//            Configuration.ORIENTATION_LANDSCAPE -> "Landscape"
-//            Configuration.ORIENTATION_UNDEFINED -> "Undefined"
-//            else -> "Error"
-//        }
-//    }
+abstract class BackgroundCheck(){
+    companion object {
+        var backOn: Boolean = false
+        var time : String = "null"
+    }
+}

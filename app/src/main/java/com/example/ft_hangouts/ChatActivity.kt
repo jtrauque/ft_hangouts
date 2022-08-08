@@ -21,6 +21,10 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -42,7 +46,6 @@ class ChatActivity : AppCompatActivity() {
     private var receiverId: Int = 0
     private var senderId: Int = 0
     private lateinit var message: String
-    private var time:String = "null"
     private var name = ""
     private var phone = ""
 
@@ -112,22 +115,25 @@ class ChatActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         Log.e(TAG, "onStart")
+        if (BackgroundCheck.time != "null" && BackgroundCheck.backOn) {
+            var time = BackgroundCheck.time
+            Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
+            BackgroundCheck.backOn = false
+        }
     }
 
     override fun onResume() {
         super.onResume()
         registerReceiver(broadCastReceiver, IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION))
         messageAdapter.add(receiverId)
-        if (time != "null")
-            Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
         Log.e(TAG, "onResume")
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-        time = sdf.format(Date())
-        Log.e(TAG, "onPause")
+        BackgroundCheck.time = sdf.format(Date())
+        Log.e(TAG, "onStop ${BackgroundCheck.time}")
     }
 
     override fun onDestroy() {

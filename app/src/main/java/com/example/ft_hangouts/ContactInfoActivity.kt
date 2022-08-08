@@ -29,8 +29,6 @@ class ContactInfo : AppCompatActivity() {
 
     private lateinit var sqliteHelper: DataBaseHandler
 
-    private var time:String = "null"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contact_info)
@@ -74,16 +72,19 @@ class ContactInfo : AppCompatActivity() {
         }
     }
 
-    public override fun onResume() {
-        super.onResume()
-        if (time != "null")
+    public override fun onStart() {
+        super.onStart()
+        if (BackgroundCheck.time != "null" && BackgroundCheck.backOn) {
+            var time = BackgroundCheck.time
             Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
+            BackgroundCheck.backOn = false
+        }
     }
 
     override fun onStop() {
         super.onStop()
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-        time = sdf.format(Date())
+        BackgroundCheck.time = sdf.format(Date())
     }
 
     private fun activityColor() {

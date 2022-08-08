@@ -11,6 +11,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.text.isDigitsOnly
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,8 +27,6 @@ class Save : AppCompatActivity() {
     private lateinit var btnSave: Button
 
     lateinit var sqliteHelper: DataBaseHandler
-
-    private var time:String = "null"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,18 +45,24 @@ class Save : AppCompatActivity() {
         btnSave.setOnClickListener(){
             addContact()
         }
+
     }
 
-    public override fun onResume() {
-        super.onResume()
-        if (time != "null")
+    public override fun onStart() {
+        super.onStart()
+
+        if (BackgroundCheck.time != "null" && BackgroundCheck.backOn) {
+            var time = BackgroundCheck.time
             Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
+            BackgroundCheck.backOn = false
+        }
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
+
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-        time = sdf.format(Date())
+        BackgroundCheck.time = sdf.format(Date())
     }
 
     private fun initView() {
