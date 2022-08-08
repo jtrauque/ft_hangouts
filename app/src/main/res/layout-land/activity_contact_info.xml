@@ -20,7 +20,7 @@
             android:layout_height="30dp"
             android:background="@drawable/btn_shape"
             android:gravity="center"
-            android:text="Contact Details"
+            android:text="@string/contact_details_land"
             android:textColor="@color/blue"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -39,7 +39,7 @@
             android:id="@+id/nameTitle"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Name :"
+            android:text="@string/name_land"
             android:textSize="16sp"
             android:textStyle="italic" />
 
@@ -65,7 +65,7 @@
             android:id="@+id/phoneTitle"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Phone :"
+            android:text="@string/phone_land"
             android:textSize="16sp"
             android:textStyle="italic" />
 
@@ -91,7 +91,7 @@
             android:id="@+id/addressTitle"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Address :"
+            android:text="@string/address_land"
             android:textSize="16sp"
             android:textStyle="italic" />
 
@@ -117,7 +117,7 @@
             android:id="@+id/mailTitle"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="eMail :"
+            android:text="@string/email_land"
             android:textSize="16sp"
             android:textStyle="italic" />
 
@@ -143,7 +143,7 @@
             android:id="@+id/birthdayTitle"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Birthday date :"
+            android:text="@string/birthday_date_land"
             android:textSize="16sp"
             android:textStyle="italic" />
 
@@ -172,7 +172,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginEnd="50dp"
             android:background="@drawable/btn_shape"
-            android:text="Modify"
+            android:text="@string/modify_land"
             android:textColor="@color/blue"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -183,7 +183,7 @@
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/btn_shape"
-            android:text="Delete"
+            android:text="@string/delete_land"
             android:textColor="@color/blue"
             android:textSize="16sp"
             android:textStyle="bold" />

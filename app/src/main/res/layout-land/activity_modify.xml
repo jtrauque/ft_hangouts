@@ -24,7 +24,7 @@ android:background="@drawable/backland">
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edt_background"
-        android:hint="Name"
+        android:hint="@string/name_save_land"
         android:paddingLeft="10dp" />
 
     <EditText
@@ -36,7 +36,7 @@ android:background="@drawable/backland">
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edt_background"
-        android:hint="Phone number"
+        android:hint="@string/phone_number_land"
         android:paddingLeft="10dp" />
 
     <EditText
@@ -48,7 +48,7 @@ android:background="@drawable/backland">
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edt_background"
-        android:hint="Address"
+        android:hint="@string/address_save_land"
         android:paddingLeft="10dp" />
 
     <EditText
@@ -60,7 +60,7 @@ android:background="@drawable/backland">
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edt_background"
-        android:hint="Mail"
+        android:hint="@string/mail_save_land"
         android:paddingLeft="10dp" />
 
     <EditText
@@ -72,7 +72,7 @@ android:background="@drawable/backland">
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/edt_background"
-        android:hint="Birthday"
+        android:hint="@string/birthday_save_land"
         android:paddingLeft="10dp" />
 
 </LinearLayout>
@@ -82,7 +82,7 @@ android:background="@drawable/backland">
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_below="@id/edPhone"
-    android:text="Save"
+    android:text="@string/save_land"
     android:textSize="16dp"
     android:layout_gravity="center_horizontal"
     android:background="@drawable/btn_shape"
