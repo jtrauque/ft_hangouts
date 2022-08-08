@@ -44,12 +44,12 @@ class PopUpColor: AppCompatActivity() {
             } else if (boxLight.isChecked) {
                 result = "Light it is"
               //  ColorManager.back = "#d9d9d9"
-                ColorManager.back = "#f9efd2"
+                ColorManager.back = "#d9d9d9"
                 ColorManager.text = "#004d4d"
             } else if (boxDark.isChecked) {
                 result = "Dark it is"
                 ColorManager.back = "#004d4d"
-                ColorManager.text = "#f9efd2"
+                ColorManager.text = "#d9d9d9"
             } else {
                 result = "No changes"
             }
@@ -121,6 +121,6 @@ class PopUpColor: AppCompatActivity() {
 abstract class ColorManager(){
     companion object {
         var back: String = "#004d4d"
-        var text: String = "#f9efd2"
+        var text: String = "#d9d9d9"
     }
 }

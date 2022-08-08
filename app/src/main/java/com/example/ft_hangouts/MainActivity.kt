@@ -1,21 +1,14 @@
 package com.example.ft_hangouts
 
-import android.Manifest
-import android.app.ActivityManager
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
-import android.provider.Telephony
+
 import android.text.Html
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
@@ -76,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         var colorText = ColorManager.text
         title.setBackgroundColor(Color.parseColor(ColorManager.back))
         title.text = Html.fromHtml("<font color=$colorText>All Contacts")
+
         tape.setBackgroundColor(Color.parseColor(ColorManager.back))
         btnSet.setColorFilter(Color.parseColor(colorText))
         btnSms.setColorFilter(Color.parseColor(colorText))
@@ -164,3 +158,13 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById((R.id.recycleView))
     }
 }
+
+//val Context.orientation:String
+//    get() {
+//        return when(resources.configuration.orientation){
+//            Configuration.ORIENTATION_PORTRAIT -> "Portrait"
+//            Configuration.ORIENTATION_LANDSCAPE -> "Landscape"
+//            Configuration.ORIENTATION_UNDEFINED -> "Undefined"
+//            else -> "Error"
+//        }
+//    }

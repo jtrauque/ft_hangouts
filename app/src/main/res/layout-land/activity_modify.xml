@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+tools:context=".Modify"
+android:background="@drawable/backland">
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginBottom="8dp">
+
+    <EditText
+        android:id="@+id/usedName"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/appLogo"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edt_background"
+        android:hint="Name"
+        android:paddingLeft="10dp" />
+
+    <EditText
+        android:id="@+id/usedPhone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/edName"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edt_background"
+        android:hint="Phone number"
+        android:paddingLeft="10dp" />
+
+    <EditText
+        android:id="@+id/usedAddress"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/edName"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edt_background"
+        android:hint="Address"
+        android:paddingLeft="10dp" />
+
+    <EditText
+        android:id="@+id/usedMail"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/edName"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edt_background"
+        android:hint="Mail"
+        android:paddingLeft="10dp" />
+
+    <EditText
+        android:id="@+id/usedBirth"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/edName"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edt_background"
+        android:hint="Birthday"
+        android:paddingLeft="10dp" />
+
+</LinearLayout>
+
+<Button
+    android:id="@+id/btnSave"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/edPhone"
+    android:text="Save"
+    android:textSize="16dp"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/btn_shape"
+    android:layout_centerHorizontal="true" />
+
+</LinearLayout>

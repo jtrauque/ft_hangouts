@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <corners android:radius="2dp"/>
-    <solid android:color="#f9efd2"/>
+    <solid android:color="#d9d9d9"/>
     <padding android:bottom="@dimen/cardview_compat_inset_shadow" />
     <corners android:radius="30dp"/>
     <stroke android:color="@color/blue" android:width="2dp"/>

@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    android:background="@drawable/pack1">
+    android:background="@drawable/backland">
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,12 +15,12 @@
         android:layout_marginTop="16dp"
         android:gravity="center_vertical"
         android:text="Welcome to ft_hangouts"
-        android:textSize="30sp" />
+        android:textSize="20sp" />
 
     <ImageView
         android:id="@+id/appLogo"
         android:layout_width="wrap_content"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         android:contentDescription="logo42"
         android:src="@drawable/logo" />
 
@@ -30,10 +30,9 @@
 
         <TextView
             android:id="@+id/btnView"
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="13dp"
+            android:layout_width="630dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="50dp"
             android:elevation="10dp"
             android:background="@drawable/btn_shape"
             android:gravity="center"
@@ -45,8 +44,7 @@
         <ImageButton
             android:id="@+id/btnAdd"
             android:layout_width="53dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="40dp"
             android:layout_marginStart="10dp"
             android:background="@null"
             android:autofillHints="add"
@@ -55,16 +53,17 @@
             app:tint="@color/blue"/>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_height="120dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleView"
-            android:layout_width="347dp"
-            android:layout_height="388dp"
-            android:layout_marginStart="20dp"
+            android:layout_width="630dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/card_items_contacts" />
     </LinearLayout>
@@ -78,8 +77,8 @@
         android:elevation="10dp">
         <ImageButton
             android:id="@+id/btnSet"
-            android:layout_width="53dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="0dp"
             android:layout_marginStart="50dp"
             android:background="@null"
@@ -91,10 +90,10 @@
 
         <ImageButton
             android:id="@+id/btnConv"
-            android:layout_width="53dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="0dp"
-            android:layout_marginStart="200dp"
+            android:layout_marginStart="550dp"
             android:layout_gravity="center_vertical"
             android:background="@null"
             android:autofillHints="sms"
