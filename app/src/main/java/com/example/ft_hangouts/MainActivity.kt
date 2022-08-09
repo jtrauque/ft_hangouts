@@ -2,12 +2,12 @@ package com.example.ft_hangouts
 
 import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.os.LocaleList
 import android.text.Html
 import android.util.Log
 import android.widget.ImageButton
@@ -76,17 +76,17 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
     }
 
     private fun showChangeLang() {
-        val listItems = arrayOf("English", "French")
+        val listItems = arrayOf("French", "English")
 
         val mBuilder = AlertDialog.Builder(this)
         mBuilder.setTitle("Choose Language")
         mBuilder.setSingleChoiceItems(listItems, -1) { dialog, which ->
             Log.e("LANGUAGE :", which.toString())
             if (which == 0) {
-                setLocate("en")
+                setLocate("fr", this)
                 recreate()
             } else if (which == 1) {
-                setLocate("fr-rFR")
+                setLocate("en", this)
                 recreate()
             }
             dialog.dismiss()
@@ -95,31 +95,42 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         mDialog.show()
     }
 
-    private fun setLocate(Lang: String) {
-        val local = Locale(Lang)
-        Locale.setDefault(local)
-        val config = Configuration()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            config.setLocale(local)
+    private fun setLocate(Lang: String, context: Context) {
 
-            val localeList = LocaleList(local)
-            LocaleList.setDefault(localeList)
-            config.setLocales(localeList)
+        var sysLocale: Locale? = null
+        var conf: Configuration = context.resources.configuration
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+            Log.e("SET LOCATE ", "get0")
+            sysLocale = conf.locales.get(0)
         } else {
-            config.locale = local
-            config.setLocale(local)
+            Log.e("SET LOCATE ", "else")
+            sysLocale = conf.locale
         }
-//        config.setLocale(local)
-       // baseContext.resources.updateConfiguration(config, baseContext.resources.displayMetrics)
+        Log.e("SET LOCATE lang", sysLocale.language)
+        if (Lang != "" && (sysLocale.language != Lang)) {
+            Log.e("SET LOCATE ", "IN")
+            val locale = Locale(Lang)
+            Locale.setDefault(locale)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Log.e("SET LOCATE ", "setlocale")
+                conf.setLocale(locale)
+                conf.setLayoutDirection(locale)
+            } else {
+                Log.e("SET LOCATE ", "other")
+                conf.locale = locale
+            }
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            config.setLayoutDirection(local)
-            this.createConfigurationContext(config)
+            baseContext.createConfigurationContext(conf)
         } else {
-            this.resources.updateConfiguration(config, this.resources.displayMetrics)
+            baseContext.resources.updateConfiguration(conf, context.resources.displayMetrics)
         }
+
         val editor = getSharedPreferences("Settings", Context.MODE_PRIVATE).edit()
         editor.putString("My_Lang", Lang)
-        Log.e("SETLOCATE ", editor.putString("My_Lang", Lang).toString())
+        Log.e("SETLOCATE ", Lang)
         editor.apply()
     }
 
@@ -127,7 +138,7 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
         val language = sharedPreferences.getString("My_Lang", "")
         Log.e("LOADLOCATE ", language.toString())
-        setLocate(language!!)
+        setLocate(language!!, this)
     }
 
     private fun activityColor() {
@@ -139,6 +150,9 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         btnSet.setColorFilter(Color.parseColor(colorText))
         btnSms.setColorFilter(Color.parseColor(colorText))
         btnLanguage.setColorFilter(Color.parseColor(colorText))
+
+//        val actionBar = supportActionBar
+//        actionBar!!.title = resources.getString(R.string.app_name)
     }
 
     public override fun onStart() {
