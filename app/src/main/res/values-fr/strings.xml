@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ft_hangouts</string>
-    <string name="welcome_to_ft_hangouts">Bienvenu sur ft_hangouts</string>
+    <string name="welcome_to_ft_hangouts">Bienvenue sur ft_hangouts</string>
     <string name="logo42">logo42</string>
     <string name="all_contacts">Vos Contacts</string>
+    <string name="home">Menu</string>
+    <string name="info">Informations sur </string>
+    <string name="create">Creation de contact</string>
     <string name="add">add</string>
     <string name="logo42_main">logo42</string>
     <string name="all_contacts_land">Vos Contacts</string>
@@ -57,4 +60,5 @@
     <string name="save_header_land">Enregistrer</string>
     <string name="light_land">Clair</string>
     <string name="dark_land">Sombre</string>
+    <string name="message">Écris un message</string>
 </resources>

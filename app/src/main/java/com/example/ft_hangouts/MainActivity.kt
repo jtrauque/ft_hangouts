@@ -98,8 +98,10 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
     private fun setLocate(Lang: String, context: Context) {
 
         var sysLocale: Locale? = null
+//        val locale = Locale(Lang)
+//        Locale.setDefault(locale)
         var conf: Configuration = context.resources.configuration
-
+  //      var conf: Configuration = Configuration()
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
             Log.e("SET LOCATE ", "get0")
             sysLocale = conf.locales.get(0)
@@ -107,25 +109,27 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
             Log.e("SET LOCATE ", "else")
             sysLocale = conf.locale
         }
-        Log.e("SET LOCATE lang", sysLocale.language)
         if (Lang != "" && (sysLocale.language != Lang)) {
             Log.e("SET LOCATE ", "IN")
             val locale = Locale(Lang)
             Locale.setDefault(locale)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Log.e("SET LOCATE ", "setlocale")
-                conf.setLocale(locale)
-                conf.setLayoutDirection(locale)
-            } else {
-                Log.e("SET LOCATE ", "other")
-                conf.locale = locale
-            }
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            baseContext.createConfigurationContext(conf)
-        } else {
-            baseContext.resources.updateConfiguration(conf, context.resources.displayMetrics)
+            Log.e("SETLOCATE ", locale.toString())
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                Log.e("SET LOCATE ", "setlocale")
+//                conf.setLocale(locale)
+//                conf.setLayoutDirection(locale)
+//            } else {
+//                Log.e("SET LOCATE ", "other")
+//                conf.locale = locale
+//            }
+////        }
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+//            baseContext.createConfigurationContext(conf)
+//        } else {
+//            baseContext.resources.updateConfiguration(conf, context.resources.displayMetrics)
+            conf.locale = locale
+            resources.updateConfiguration(conf, resources.displayMetrics)
         }
 
         val editor = getSharedPreferences("Settings", Context.MODE_PRIVATE).edit()
@@ -144,7 +148,7 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
     private fun activityColor() {
         var colorText = ColorManager.text
         title.setBackgroundColor(Color.parseColor(ColorManager.back))
-        title.text = Html.fromHtml("<font color=$colorText>All Contacts")
+        title.text = Html.fromHtml("<font color=$colorText>" + getString(R.string.all_contacts))
 
         tape.setBackgroundColor(Color.parseColor(ColorManager.back))
         btnSet.setColorFilter(Color.parseColor(colorText))

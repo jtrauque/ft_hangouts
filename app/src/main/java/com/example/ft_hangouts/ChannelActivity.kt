@@ -38,12 +38,16 @@ class ChannelActivity : AppCompatActivity() {
         initView()
         convAdapter?.addItems()
 
+        layoutManagement()
+    }
+
+    private fun layoutManagement() {
         var colorText: String = ColorManager.text
-        supportActionBar?.title = Html.fromHtml("<font color=$colorText>Home")
+        supportActionBar?.title = Html.fromHtml("<font color=$colorText>" + resources.getString(R.string.home))
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor(ColorManager.back)))
 
         title.setBackgroundColor(Color.parseColor(ColorManager.back))
-        title.text = Html.fromHtml("<font color=$colorText>Chat")
+        title.text = Html.fromHtml("<font color=$colorText>" + getString(R.string.chat))
     }
 
     private fun initView() {

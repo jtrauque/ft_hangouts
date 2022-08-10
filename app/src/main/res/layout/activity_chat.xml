@@ -39,7 +39,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
         android:layout_weight="85"
-        android:hint="Type a message"
+        android:hint="@string/message"
         android:paddingLeft="10dp"
         android:textColor="@color/blue" />
 

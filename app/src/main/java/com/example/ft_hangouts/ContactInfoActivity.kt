@@ -89,11 +89,11 @@ class ContactInfo : AppCompatActivity() {
 
     private fun activityColor() {
         var colorText: String = ColorManager.text
-        supportActionBar?.title = Html.fromHtml("<font color=$colorText>Details on $name")
+        supportActionBar?.title = Html.fromHtml("<font color=$colorText>" + getString(R.string.info) + "$name")
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor(ColorManager.back)))
 
         title.setBackgroundColor(Color.parseColor(ColorManager.back))
-        title.text = Html.fromHtml("<font color=$colorText>Contact Details")
+        title.text = Html.fromHtml("<font color=$colorText>" + getString(R.string.contact_details))
 
         btnDelete.setBackgroundColor(Color.parseColor(ColorManager.back))
         btnDelete.setTextColor(Color.parseColor(ColorManager.text))
