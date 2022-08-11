@@ -11,10 +11,7 @@ import android.widget.Toast
 import java.lang.Exception
 
 const val DATABASE_NAME = "MyDB"
-//val TABLE_NAME = "Users"
-//val COL_NAME = "name"
-//val COL_PHONE = "phone"
-//val COL_ID = "id"
+private val TAG = "DataBaseHandler"
 
 class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
 
@@ -62,7 +59,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
     }
 
     fun deleteContact(contact: Contact) {
-        Log.e("deleteContact", "$contact.id")
+        Log.e(TAG, "Delete contact : $contact.id")
         val db = this.writableDatabase
         db.delete(TABLE_NAME, "id=" + contact.id, null)
         db.close()
@@ -73,7 +70,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
     }
 
     fun deleteConv(contact: Contact) {
-        Log.e("deleteConv", "$contact.id")
+        Log.e(TAG , "Delete conv : $contact.id")
         val db = this.writableDatabase
         db.delete(TABLE_MESS, "received=" + contact.id, null)
         db.delete(TABLE_MESS, "received=" + 0, null)
@@ -91,8 +88,7 @@ class DataBaseHandler (var context: Context) : SQLiteOpenHelper(context, DATABAS
             cv.put(COL_MESSAGEID, message.messageId)
         cv.put(COL_DATE, message.date)
 
-        Log.e("NEW MESSAGE RECEIVED:", message.message)
-        Log.e("RECEIVED FROM:", message.senderId.toString())
+        Log.e(TAG , "new message : ${message.message} from ${message.senderId.toString()}")
         val result = db.insert(TABLE_MESS, null, cv)
         if (result == (-1).toLong())
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
