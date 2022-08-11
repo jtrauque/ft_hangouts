@@ -3,7 +3,15 @@
     <string name="welcome_to_ft_hangouts">Welcome to ft_hangouts</string>
     <string name="logo42">logo42</string>
     <string name="home">Home</string>
+    <string name="no_both_changes">You cannot have both - no changes</string>
+    <string name="no_changes">No changes</string>
+    <string name="its_light">Light it is</string>
+    <string name="its_dark">Dark it is</string>
+    <string name="time">Last used :</string>
     <string name="info">Details on </string>
+    <string name="french">French </string>
+    <string name="english">English </string>
+    <string name="choose">Choose your language</string>
     <string name="all_contacts">All Contacts</string>
     <string name="create">Contact creation</string>
     <string name="add">add</string>
@@ -60,4 +68,8 @@
     <string name="light_land">Light</string>
     <string name="dark_land">Dark</string>
     <string name="message">Type a message</string>
+    <string name="settings">settings</string>
+    <string name="language">language</string>
+    <string name="conv">conv</string>
+    <string name="arrow">arrow</string>
 </resources>

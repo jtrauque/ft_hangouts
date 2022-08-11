@@ -1,6 +1,6 @@
 package com.example.ft_hangouts
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -11,10 +11,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.text.isDigitsOnly
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ProcessLifecycleOwner
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,14 +22,14 @@ class Save : AppCompatActivity() {
     private lateinit var edBirth: EditText
     private lateinit var btnSave: Button
 
-    lateinit var sqliteHelper: DataBaseHandler
+    private lateinit var sqliteHelper: DataBaseHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save)
 
-        var colorText: String = ColorManager.text
-        supportActionBar?.title = Html.fromHtml("<font color=$colorText>Contact creation")
+        val colorText: String = ColorManager.text
+        supportActionBar?.title = Html.fromHtml("<font color=$colorText>" + getString(R.string.create))
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor(ColorManager.back)))
 
         initView()
@@ -42,7 +38,7 @@ class Save : AppCompatActivity() {
         btnSave.setTextColor(Color.parseColor(ColorManager.text))
 
         sqliteHelper = DataBaseHandler(this)
-        btnSave.setOnClickListener(){
+        btnSave.setOnClickListener {
             addContact()
         }
 
@@ -52,12 +48,13 @@ class Save : AppCompatActivity() {
         super.onStart()
 
         if (BackgroundCheck.time != "null" && BackgroundCheck.backOn) {
-            var time = BackgroundCheck.time
-            Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
+            val time = BackgroundCheck.time
+            Toast.makeText(this, getString(R.string.time) + " $time", Toast.LENGTH_SHORT).show()
             BackgroundCheck.backOn = false
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onStop() {
         super.onStop()
 
@@ -81,7 +78,6 @@ class Save : AppCompatActivity() {
         val mail = edMail.text.toString()
         val birth = edBirth.text.toString()
 
-        Log.e("in add contact function", "2")
         if (name.isEmpty() || phone.isEmpty()) {
             Toast.makeText(this, "Please enter both required fields", Toast.LENGTH_SHORT).show()
         } else if (!phone.isDigitsOnly()) {

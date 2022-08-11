@@ -21,17 +21,10 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ProcessLifecycleOwner
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
-
 
 class ChatActivity : AppCompatActivity() {
     private val TAG = "ChatActivity"
@@ -40,7 +33,6 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var messageBox: EditText
     private lateinit var sendButton: ImageView
     private lateinit var messageAdapter: MessageAdapter
-    private lateinit var messageList: ArrayList<Message>
     private lateinit var sqliteHelper: DataBaseHandler
 
     private var receiverId: Int = 0
@@ -67,7 +59,7 @@ class ChatActivity : AppCompatActivity() {
         activityColor()
         initView()
 
-        messageAdapter?.add(receiverId)
+        messageAdapter.add(receiverId)
 
         sendButton.setOnClickListener {
             message = messageBox.text.toString()
@@ -96,7 +88,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun activityColor() {
-        var colorText: String = ColorManager.text
+        val colorText: String = ColorManager.text
         supportActionBar?.title = Html.fromHtml("<font color=$colorText>$name +1$phone")
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor(ColorManager.back)))
     }
@@ -114,10 +106,10 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        Log.e(TAG, "onStart")
+
         if (BackgroundCheck.time != "null" && BackgroundCheck.backOn) {
-            var time = BackgroundCheck.time
-            Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
+            val time = BackgroundCheck.time
+            Toast.makeText(this, getString(R.string.time) + " $time", Toast.LENGTH_SHORT).show()
             BackgroundCheck.backOn = false
         }
     }
@@ -126,19 +118,16 @@ class ChatActivity : AppCompatActivity() {
         super.onResume()
         registerReceiver(broadCastReceiver, IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION))
         messageAdapter.add(receiverId)
-        Log.e(TAG, "onResume")
     }
 
     override fun onStop() {
         super.onStop()
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
         BackgroundCheck.time = sdf.format(Date())
-        Log.e(TAG, "onStop ${BackgroundCheck.time}")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.e("On DESTROY", "0")
         Log.e(TAG, "onDestroy: register receiver ")
         unregisterReceiver(broadCastReceiver)
     }
@@ -146,7 +135,7 @@ class ChatActivity : AppCompatActivity() {
     //https://androidexample365.com/sample-of-how-to-intercept-a-sms-with-broadcastreceiver/
     @RequiresApi(Build.VERSION_CODES.M)
     fun getPermission(permission: String) {
-        Log.e("GET PERMISSION", TAG)
+
         if (ContextCompat.checkSelfPermission(
                 this,
                 permission
@@ -159,7 +148,6 @@ class ChatActivity : AppCompatActivity() {
     private val broadCastReceiver = object : BroadcastReceiver() {
 
         override fun onReceive(context: Context?, intent: Intent) {
-            Log.e("BROADCAST VAR", "0")
             if (Telephony.Sms.Intents.SMS_RECEIVED_ACTION == intent.action) {
                     messageAdapter.add(receiverId)
             }

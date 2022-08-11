@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -22,12 +21,10 @@ class ConvAdapter(val context: Context, private val data: DataBaseHandler): Recy
         private var btnDelete = view.findViewById<ImageButton>(R.id.btnDeleteConv)
 
         fun binView(ct: Contact, position: Int) {
-            Log.e("name = ", ct.name)
             name.text = ct.name
 
             btnDelete.setColorFilter(Color.parseColor(ColorManager.back))
             btnDelete.setOnClickListener {
-                Log.e("plop", position.toString())
                 deleteItem(position)
             }
         }
@@ -36,19 +33,17 @@ class ConvAdapter(val context: Context, private val data: DataBaseHandler): Recy
     fun setOnClickItem(callback: (Contact)->Unit) {
         this.onClickItem = callback
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConvAdapter.ConvViewHolder {
-        Log.e("Conv", "1")
         val inflatedView = LayoutInflater.from(parent.context).inflate(R.layout.card_items_channels, parent, false)
         return ConvViewHolder(inflatedView)
     }
 
     override fun onBindViewHolder(holder: ConvAdapter.ConvViewHolder, position: Int) {
-        Log.e("CONVADAPT LIST:", convList[0].name)
-        Log.e("CONVADAPT LIST s:", itemCount.toString())
         val ct = convList[position]
 
         holder.binView(ct, position)
-        Log.e("plop ON BIND", position.toString())
+
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ChatActivity::class.java)
 
@@ -56,7 +51,6 @@ class ConvAdapter(val context: Context, private val data: DataBaseHandler): Recy
             intent.putExtra("id", ct.id)
             intent.putExtra("phone", ct.phone)
             context.startActivity(intent) //to chat with the person
-            // onClickItem?.invoke(ct) } to get the name pop up
         }
     }
 
@@ -66,7 +60,6 @@ class ConvAdapter(val context: Context, private val data: DataBaseHandler): Recy
 
     fun addItems() {
         convList = data.getAllConv()
-        Log.e("ADD CONV ON BIND", convList.toString())
         notifyDataSetChanged()
     }
 

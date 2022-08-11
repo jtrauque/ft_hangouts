@@ -1,5 +1,6 @@
 package com.example.ft_hangouts
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -8,7 +9,6 @@ import android.text.Html
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -42,7 +42,7 @@ class ContactInfo : AppCompatActivity() {
 
         sqliteHelper = DataBaseHandler(this)
 
-        var ct : Contact = sqliteHelper.getContact(id)
+        val ct : Contact = sqliteHelper.getContact(id)
         infoName.text = ct.name
         infoPhone.text = ct.phone
         infoAddress.text = ct.address
@@ -50,12 +50,11 @@ class ContactInfo : AppCompatActivity() {
         infoBirth.text = ct.birth
 
         btnDelete.setOnClickListener {
-            Log.e("DELETE", name)
             sqliteHelper.deleteContact(sqliteHelper.getContact(id))
             onBackPressed()
         }
 
-        btnModify.setOnClickListener(){
+        btnModify.setOnClickListener {
             val intent = Intent(this, Modify::class.java)
             intent.putExtra("id", id)
             startActivity(intent)
@@ -75,12 +74,24 @@ class ContactInfo : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         if (BackgroundCheck.time != "null" && BackgroundCheck.backOn) {
-            var time = BackgroundCheck.time
-            Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
+            val time = BackgroundCheck.time
+            Toast.makeText(this, getString(R.string.time) + " $time", Toast.LENGTH_SHORT).show()
             BackgroundCheck.backOn = false
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        val ct : Contact = sqliteHelper.getContact(id)
+        infoName.text = ct.name
+        infoPhone.text = ct.phone
+        infoAddress.text = ct.address
+        infoMail.text = ct.mail
+        infoBirth.text = ct.birth
+    }
+
+    @SuppressLint("SimpleDateFormat")
     override fun onStop() {
         super.onStop()
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
@@ -88,8 +99,8 @@ class ContactInfo : AppCompatActivity() {
     }
 
     private fun activityColor() {
-        var colorText: String = ColorManager.text
-        supportActionBar?.title = Html.fromHtml("<font color=$colorText>" + getString(R.string.info) + "$name")
+        val colorText: String = ColorManager.text
+        supportActionBar?.title = Html.fromHtml("<font color=$colorText>" + getString(R.string.info) + " $name")
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor(ColorManager.back)))
 
         title.setBackgroundColor(Color.parseColor(ColorManager.back))
@@ -111,6 +122,6 @@ class ContactInfo : AppCompatActivity() {
         infoAddress = findViewById(R.id.addressDetails)
         infoMail = findViewById(R.id.mailDetails)
         infoBirth = findViewById(R.id.birthdayDetails)
-        title = findViewById<TextView>(R.id.title)
+        title = findViewById(R.id.title)
     }
 }

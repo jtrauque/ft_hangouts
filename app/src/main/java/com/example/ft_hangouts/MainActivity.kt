@@ -1,8 +1,8 @@
 package com.example.ft_hangouts
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
@@ -41,28 +41,27 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loadLocate()
         setContentView(R.layout.activity_main)
 
         sqliteHelper = DataBaseHandler(this)
-        //sqliteHelper.deleteTable()
+       // sqliteHelper.deleteTable()
 
         initView()
         initRecycleView()
 
-        btnAdd.setOnClickListener(){
+        btnAdd.setOnClickListener {
             val intent = Intent(this, Save::class.java)
             startActivity(intent)
         }
-        btnSms.setOnClickListener(){
+        btnSms.setOnClickListener {
             val intent = Intent(this, ChannelActivity::class.java)
             startActivity(intent)
         }
-        btnSet.setOnClickListener(){
+        btnSet.setOnClickListener {
             val intent = Intent(this, PopUpColor::class.java)
             startActivity(intent)
         }
-        btnLanguage.setOnClickListener(){
+        btnLanguage.setOnClickListener {
             showChangeLang()
         }
         adapter?.setOnClickItem {
@@ -76,12 +75,12 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
     }
 
     private fun showChangeLang() {
-        val listItems = arrayOf("French", "English")
+        val listItems = arrayOf(getString(R.string.french), getString(R.string.english))
 
         val mBuilder = AlertDialog.Builder(this)
-        mBuilder.setTitle("Choose Language")
+        mBuilder.setTitle(getString(R.string.choose))
         mBuilder.setSingleChoiceItems(listItems, -1) { dialog, which ->
-            Log.e("LANGUAGE :", which.toString())
+
             if (which == 0) {
                 setLocate("fr", this)
                 recreate()
@@ -97,56 +96,28 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
 
     private fun setLocate(Lang: String, context: Context) {
 
-        var sysLocale: Locale? = null
-//        val locale = Locale(Lang)
-//        Locale.setDefault(locale)
-        var conf: Configuration = context.resources.configuration
-  //      var conf: Configuration = Configuration()
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
-            Log.e("SET LOCATE ", "get0")
-            sysLocale = conf.locales.get(0)
+        val conf: Configuration = context.resources.configuration
+
+        val sysLocale = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+            conf.locales.get(0)
         } else {
-            Log.e("SET LOCATE ", "else")
-            sysLocale = conf.locale
+            conf.locale
         }
         if (Lang != "" && (sysLocale.language != Lang)) {
-            Log.e("SET LOCATE ", "IN")
             val locale = Locale(Lang)
             Locale.setDefault(locale)
-            Log.e("SETLOCATE ", locale.toString())
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                Log.e("SET LOCATE ", "setlocale")
-//                conf.setLocale(locale)
-//                conf.setLayoutDirection(locale)
-//            } else {
-//                Log.e("SET LOCATE ", "other")
-//                conf.locale = locale
-//            }
-////        }
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-//            baseContext.createConfigurationContext(conf)
-//        } else {
-//            baseContext.resources.updateConfiguration(conf, context.resources.displayMetrics)
+
             conf.locale = locale
             resources.updateConfiguration(conf, resources.displayMetrics)
         }
 
         val editor = getSharedPreferences("Settings", Context.MODE_PRIVATE).edit()
         editor.putString("My_Lang", Lang)
-        Log.e("SETLOCATE ", Lang)
         editor.apply()
     }
 
-    private fun loadLocate() {
-        val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
-        val language = sharedPreferences.getString("My_Lang", "")
-        Log.e("LOADLOCATE ", language.toString())
-        setLocate(language!!, this)
-    }
-
     private fun activityColor() {
-        var colorText = ColorManager.text
+        val colorText = ColorManager.text
         title.setBackgroundColor(Color.parseColor(ColorManager.back))
         title.text = Html.fromHtml("<font color=$colorText>" + getString(R.string.all_contacts))
 
@@ -154,51 +125,37 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         btnSet.setColorFilter(Color.parseColor(colorText))
         btnSms.setColorFilter(Color.parseColor(colorText))
         btnLanguage.setColorFilter(Color.parseColor(colorText))
-
-//        val actionBar = supportActionBar
-//        actionBar!!.title = resources.getString(R.string.app_name)
     }
 
     public override fun onStart() {
         super.onStart()
-        Log.e("MAIN", "On START")
+
         if (BackgroundCheck.time != "null" && BackgroundCheck.backOn) {
-            var time = BackgroundCheck.time
-            Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
+            val time = BackgroundCheck.time
+            Toast.makeText(this, getString(R.string.time) + " $time", Toast.LENGTH_SHORT).show()
             BackgroundCheck.backOn = false
-            BackgroundCheck.time = "null"
+            BackgroundCheck.time = null
         }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onAppBackgrounded() {
-        Log.e("MAIN", "BACKGROOOOOUND")
         BackgroundCheck.backOn = true
         //App in background
     }
 
     public override fun onResume() {
         super.onResume()
-        Log.e("MAIN", "On RESUME")
+
         getContacts()
         activityColor()
     }
 
-    override fun onPause() {
-        super.onPause()
-        Log.e("MAIN", "On PAUSE")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.e("MAIN", "On DESTROY")
-    }
-
+    @SuppressLint("SimpleDateFormat")
     public override fun onStop() {
         super.onStop()
         val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
         BackgroundCheck.time = sdf.format(Date())
-        Log.e("MAIN", "On STOP")
     }
 
     private fun getContacts() {
@@ -207,15 +164,13 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         if (adapter == null)
             return
 
-        Log.e("pppp", "${ctList.size}")
         adapter?.addItems(ctList){position -> deleteItem(position as Int)}
         adapter?.addItems(ctList){position -> modifyItem(position as Int)}
     }
 
     private fun deleteItem(position: Int) {
-        Log.e("ppppdeleteI", "$position")
         if (::sqliteHelper.isInitialized) {
-            val ctList = sqliteHelper.getAllContact()
+            sqliteHelper.getAllContact()
         }
     }
 
@@ -230,25 +185,25 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
     private fun initRecycleView() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = ContactAdapter(this, sqliteHelper, {
-                position -> deleteItem(position as Int)}, {
-                position -> modifyItem(position as Int)})
+                position -> deleteItem(position)}, {
+                position -> modifyItem(position)})
         recyclerView.adapter = adapter
     }
 
     private fun initView() {
-        btnAdd = findViewById<ImageButton>(R.id.btnAdd)
-        btnSms = findViewById<ImageButton>(R.id.btnConv)
-        btnSet = findViewById<ImageButton>(R.id.btnSet)
-        btnLanguage = findViewById<ImageButton>(R.id.btnLanguage)
-        title = findViewById<TextView>(R.id.btnView)
-        tape = findViewById<LinearLayout>(R.id.tape)
+        btnAdd = findViewById(R.id.btnAdd)
+        btnSms = findViewById(R.id.btnConv)
+        btnSet = findViewById(R.id.btnSet)
+        btnLanguage = findViewById(R.id.btnLanguage)
+        title = findViewById(R.id.btnView)
+        tape = findViewById(R.id.tape)
         recyclerView = findViewById((R.id.recycleView))
     }
 }
 
-abstract class BackgroundCheck(){
+abstract class BackgroundCheck {
     companion object {
         var backOn: Boolean = false
-        var time : String = "null"
+        var time : String? = null
     }
 }

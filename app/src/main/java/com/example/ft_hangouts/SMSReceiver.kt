@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Telephony
 import android.util.Log
-import androidx.recyclerview.widget.RecyclerView
 
 class SMSReceiver : BroadcastReceiver() {
     private lateinit var sqliteHelper: DataBaseHandler
@@ -16,7 +15,7 @@ class SMSReceiver : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context?, intent: Intent) {
-        Log.e("ON RECEIVE:", "0")
+
         Log.e(TAG, "onReceive with $intent")
         sqliteHelper = DataBaseHandler(context!!)
 

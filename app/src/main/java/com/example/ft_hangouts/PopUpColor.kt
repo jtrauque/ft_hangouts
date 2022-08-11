@@ -1,27 +1,18 @@
 package com.example.ft_hangouts
 
-import android.animation.ArgbEvaluator
-import android.animation.ValueAnimator
 import android.app.Activity
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
+
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
 import android.widget.Button
 import android.widget.CheckBox
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.graphics.ColorUtils
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ProcessLifecycleOwner
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,9 +21,7 @@ class PopUpColor: AppCompatActivity() {
     private lateinit var boxDark: CheckBox
     private lateinit var button: Button
     private var darkStatusBar = false
-    private lateinit var popup_window_view_with_border:CardView
-    private lateinit var popup_window_view:CardView
-    private lateinit var popup_window_background:ConstraintLayout
+    private lateinit var popupWindowViewWithBorder:CardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,18 +33,17 @@ class PopUpColor: AppCompatActivity() {
         button.setOnClickListener {
             val result: String
             if (boxLight.isChecked && boxDark.isChecked) {
-                result = "You cannot have both - no changes"
+                result = getString(R.string.no_both_changes)
             } else if (boxLight.isChecked) {
-                result = "Light it is"
-              //  ColorManager.back = "#d9d9d9"
+                result = getString(R.string.its_light)
                 ColorManager.back = "#d9d9d9"
                 ColorManager.text = "#004d4d"
             } else if (boxDark.isChecked) {
-                result = "Dark it is"
+                result = getString(R.string.its_dark)
                 ColorManager.back = "#004d4d"
                 ColorManager.text = "#d9d9d9"
             } else {
-                result = "No changes"
+                result = getString(R.string.no_changes)
             }
             Toast.makeText(applicationContext, result, Toast.LENGTH_SHORT).show()
             onBackPressed()
@@ -64,33 +52,31 @@ class PopUpColor: AppCompatActivity() {
         if (Build.VERSION.SDK_INT in 19..20) {
             setWindowFlag(this, true)
         }
-        if (Build.VERSION.SDK_INT >= 19) {
-            window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
-        if (Build.VERSION.SDK_INT >= 21) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 // If you want dark status bar, set darkStatusBar to true
-                if (darkStatusBar) {
-                    this.window.decorView.systemUiVisibility =
-                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                }
-                this.window.statusBarColor = Color.TRANSPARENT
-                setWindowFlag(this, false)
+            if (darkStatusBar) {
+                this.window.decorView.systemUiVisibility =
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             }
+            this.window.statusBarColor = Color.TRANSPARENT
+            setWindowFlag(this, false)
         }
-        popup_window_view_with_border.alpha = 0f
-        popup_window_view_with_border.animate().alpha(1f).setDuration(500).setInterpolator(
+
+        popupWindowViewWithBorder.alpha = 0f
+        popupWindowViewWithBorder.animate().alpha(1f).setDuration(500).setInterpolator(
             DecelerateInterpolator()
         ).start()
-
     }
 
     override fun onStart() {
         super.onStart()
         if (BackgroundCheck.time != "null" && BackgroundCheck.backOn) {
-            var time = BackgroundCheck.time
-            Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
+            val time = BackgroundCheck.time
+            Toast.makeText(this, getString(R.string.time) + " $time", Toast.LENGTH_SHORT).show()
             BackgroundCheck.backOn = false
         }
     }
@@ -113,16 +99,15 @@ class PopUpColor: AppCompatActivity() {
     }
 
     private fun initView() {
-        boxLight = findViewById<CheckBox>(R.id.light)
-        boxDark = findViewById<CheckBox>(R.id.dark)
-        button = findViewById<Button>(R.id.popup_window_button)
-        popup_window_view = findViewById<CardView>(R.id.popup_window_view)
-        popup_window_view_with_border = findViewById<CardView>(R.id.popup_window_view_with_border)
-        popup_window_background = findViewById<ConstraintLayout>(R.id.popup_window_background)
+        boxLight = findViewById(R.id.light)
+        boxDark = findViewById(R.id.dark)
+        button = findViewById(R.id.popup_window_button)
+
+        popupWindowViewWithBorder = findViewById(R.id.popup_window_view_with_border)
     }
 }
 
-abstract class ColorManager(){
+abstract class ColorManager {
     companion object {
         var back: String = "#004d4d"
         var text: String = "#d9d9d9"

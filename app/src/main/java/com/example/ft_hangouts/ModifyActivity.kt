@@ -9,13 +9,8 @@ import android.text.Html
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.text.isDigitsOnly
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ProcessLifecycleOwner
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -48,7 +43,7 @@ class Modify : AppCompatActivity() {
 
         supportActionBarTools()
 
-        btnSave.setOnClickListener(){
+        btnSave.setOnClickListener {
             modifyContact()
         }
     }
@@ -57,8 +52,8 @@ class Modify : AppCompatActivity() {
         super.onStart()
 
         if (BackgroundCheck.time != "null" && BackgroundCheck.backOn) {
-            var time = BackgroundCheck.time
-            Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
+            val time = BackgroundCheck.time
+            Toast.makeText(this, getString(R.string.time) + " $time", Toast.LENGTH_SHORT).show()
             BackgroundCheck.backOn = false
         }
     }
@@ -71,9 +66,9 @@ class Modify : AppCompatActivity() {
     }
 
     private fun supportActionBarTools() {
-        var name = ct.name
-        var phone = ct.phone
-        var colorText: String = ColorManager.text
+        val name = ct.name
+        val phone = ct.phone
+        val colorText: String = ColorManager.text
         supportActionBar?.title = Html.fromHtml("<font color=$colorText>$name - $phone")
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor(ColorManager.back)))
         btnSave.setBackgroundColor(Color.parseColor(ColorManager.back))
@@ -97,8 +92,6 @@ class Modify : AppCompatActivity() {
         var mail = newMail.text.toString()
         var birth = newBirth.text.toString()
 
-        Log.e("MODIFY FUNCTION", "2")
-
         if (name.isEmpty()) {
             name = ct.name
         }
@@ -119,13 +112,9 @@ class Modify : AppCompatActivity() {
             birth = ct.birth
         }
         val ct = Contact(usedID, name = name, phone = phone, address = address, mail = mail, birth = birth)
-        Log.e("modify contact function", ct.id.toString())
         val status = sqliteHelper.updateContact(ct)
-
-        Log.e("contact function status", status.toString())
         if (status > 0) {
             Toast.makeText(this, "Contact modified...", Toast.LENGTH_SHORT).show()
-        //  clearEditText()
         } else {
             Toast.makeText(this, "Record not saved...", Toast.LENGTH_SHORT).show()
         }

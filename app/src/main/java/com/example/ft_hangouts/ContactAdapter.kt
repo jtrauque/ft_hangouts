@@ -1,29 +1,19 @@
 package com.example.ft_hangouts
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.appcompat.view.menu.MenuView
-
 import androidx.recyclerview.widget.RecyclerView
-import androidx.core.content.ContextCompat.startActivity
-
 
 class ContactAdapter (var context: Context, private val data: DataBaseHandler, val onClickDelete: (Int) -> Unit, val onClickModify: (Int) -> Unit) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>(){
 
     inner class ContactViewHolder(private var view: View) : RecyclerView.ViewHolder(view) {
         private var name = view.findViewById<TextView>(R.id.tvName)
         private var phone = view.findViewById<TextView>(R.id.tvPhone)
-
-   //     private var ct = data.getAllContact()
 
         fun binView(ct : Contact, position : Int) {
             val btnDelete = view.findViewById<ImageButton>(R.id.btnDelete)
@@ -32,7 +22,6 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
             phone.text = ct.phone
 
             btnDelete.setOnClickListener {
-                Log.e("plop", position.toString())
                 deleteItem(position)
             }
 
@@ -42,7 +31,7 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
                 intent.putExtra("name", ct.name)
                 intent.putExtra("id", ct.id)
                 intent.putExtra("phone", ct.phone)
-                //adapter?.addItems(ct)
+
                 context.startActivity(intent) //to chat with the person
             }
         }
@@ -50,10 +39,9 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
 
     private var onClickItem: ((Contact) -> Unit)? = null
     private var ctList: ArrayList<Contact> = ArrayList()
-   // private var adapter: ConvAdapter? = null
 
     fun addItems(ctList: List<Contact>, param: (Any) -> Unit) {
-        this.ctList = data.getAllContact() as ArrayList<Contact> //ctList
+        this.ctList = data.getAllContact() //ctList
         notifyDataSetChanged()
     }
 
@@ -75,9 +63,9 @@ class ContactAdapter (var context: Context, private val data: DataBaseHandler, v
             intent.putExtra("name", ct.name)
             intent.putExtra("id", ct.id)
             intent.putExtra("phone", ct.phone)
-            //adapter?.addItems(ct)
+
             context.startActivity(intent) //to chat with the person
-            // onClickItem?.invoke(ct) } to get the name pop up
+
         }
     }
 

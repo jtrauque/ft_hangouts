@@ -84,7 +84,7 @@
             android:layout_marginStart="40dp"
             android:background="@null"
             android:autofillHints="settings"
-            android:contentDescription="settings"
+            android:contentDescription="@string/settings"
             android:layout_gravity="center_vertical"
             android:src="@drawable/settings"
             app:tint="@color/blue" />
@@ -97,7 +97,7 @@
             android:layout_marginStart="80dp"
             android:background="@null"
             android:autofillHints="settings"
-            android:contentDescription="settings"
+            android:contentDescription="@string/language"
             android:layout_gravity="center_vertical"
             android:src="@drawable/language"
             app:tint="@color/blue" />
@@ -111,7 +111,7 @@
             android:layout_gravity="center_vertical"
             android:background="@null"
             android:autofillHints="sms"
-            android:contentDescription="sms"
+            android:contentDescription="@string/conv"
             android:src="@drawable/mailbox"
             app:tint="@color/blue" />
     </LinearLayout>

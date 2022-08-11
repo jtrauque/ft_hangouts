@@ -1,20 +1,12 @@
 package com.example.ft_hangouts
 
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
-import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
@@ -24,7 +16,7 @@ import kotlin.collections.ArrayList
 class ChannelActivity : AppCompatActivity() {
 
     private lateinit var convRecyclerView: RecyclerView
-    lateinit var sqliteHelper: DataBaseHandler
+    private lateinit var sqliteHelper: DataBaseHandler
     private var convAdapter: ConvAdapter? = null
     private lateinit var ct: ArrayList<Contact>
     private lateinit var title : TextView
@@ -42,7 +34,7 @@ class ChannelActivity : AppCompatActivity() {
     }
 
     private fun layoutManagement() {
-        var colorText: String = ColorManager.text
+        val colorText: String = ColorManager.text
         supportActionBar?.title = Html.fromHtml("<font color=$colorText>" + resources.getString(R.string.home))
         supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.parseColor(ColorManager.back)))
 
@@ -56,7 +48,7 @@ class ChannelActivity : AppCompatActivity() {
         convAdapter = ConvAdapter(this, sqliteHelper)
         convRecyclerView.adapter = convAdapter
 
-        title = findViewById<TextView>(R.id.btnView)
+        title = findViewById(R.id.btnView)
     }
 
     public override fun onResume() {
@@ -67,8 +59,8 @@ class ChannelActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         if (BackgroundCheck.time != "null" && BackgroundCheck.backOn) {
-            var time = BackgroundCheck.time
-            Toast.makeText(this, "Last used : $time", Toast.LENGTH_SHORT).show()
+            val time = BackgroundCheck.time
+            Toast.makeText(this, getString(R.string.time) + " $time", Toast.LENGTH_SHORT).show()
             BackgroundCheck.backOn = false
         }
     }
